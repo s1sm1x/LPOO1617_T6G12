@@ -17,9 +17,6 @@ import javax.swing.JPanel;
 
 public class GUIAbout extends JDialog{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private GridBagConstraints gbc_panel;
 	private JPanel panel ;
@@ -28,20 +25,20 @@ public class GUIAbout extends JDialog{
 	private GridBagConstraints gbc_lblUpfeuppt_1;
 	private JLabel lblUpfeuppt_1;
 	private void init1(){setTitle("About");
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		getContentPane().setLayout(gridBagLayout);
-		JLabel lblDungeonKeep = new JLabel("Dungeon Keep");
-		lblDungeonKeep.setFont(new Font("Tahoma", Font.BOLD, 19));
-		GridBagConstraints gbc_lblDungeonKeep = new GridBagConstraints();
-		gbc_lblDungeonKeep.insets = new Insets(0, 0, 5, 5);
-		gbc_lblDungeonKeep.gridx = 3;
-		gbc_lblDungeonKeep.gridy = 0;
-		getContentPane().add(lblDungeonKeep, gbc_lblDungeonKeep);panel = new JPanel();
-		gbc_panel = new GridBagConstraints();gbc_panel.insets = new Insets(0, 0, 5, 5);
+	GridBagLayout gridBagLayout = new GridBagLayout();
+	gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+	gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+	gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+	gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+	getContentPane().setLayout(gridBagLayout);
+	JLabel lblDungeonKeep = new JLabel("Dungeon Keep");
+	lblDungeonKeep.setFont(new Font("Tahoma", Font.BOLD, 19));
+	GridBagConstraints gbc_lblDungeonKeep = new GridBagConstraints();
+	gbc_lblDungeonKeep.insets = new Insets(0, 0, 5, 5);
+	gbc_lblDungeonKeep.gridx = 3;
+	gbc_lblDungeonKeep.gridy = 0;
+	getContentPane().add(lblDungeonKeep, gbc_lblDungeonKeep);panel = new JPanel();
+	gbc_panel = new GridBagConstraints();gbc_panel.insets = new Insets(0, 0, 5, 5);
 	}
 	private void init2(){
 		gbc_panel.fill = GridBagConstraints.BOTH;

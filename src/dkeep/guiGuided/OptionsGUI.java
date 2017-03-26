@@ -1,8 +1,5 @@
 package dkeep.guiGuided;
-
-import java.awt.EventQueue;
 import java.awt.Toolkit;
-
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -12,13 +9,11 @@ import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class OptionsGUI extends JFrame {
 
 	private static final long serialVersionUID = -6532716622683837657L;
-	private int	ogresNumber=0;
+	private int	ogresNumber=1;
 	private int guardType=1;
 
 	public OptionsGUI() {
@@ -38,7 +33,7 @@ public class OptionsGUI extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		textField_Ogres = new JTextField();
-		textField_Ogres.setText("0");
+		textField_Ogres.setText(ogresNumber+"");
 		textField_Ogres.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -47,7 +42,7 @@ public class OptionsGUI extends JFrame {
 					Toolkit.getDefaultToolkit().beep();
 					e.consume();}  }  });	
 	}
-	
+
 	private void init2(){
 		textField_Ogres.setBounds(153, 44, 116, 22);
 		getContentPane().add(textField_Ogres);
@@ -72,14 +67,13 @@ public class OptionsGUI extends JFrame {
 				InterfaceGUI.setguardType(comboBox_GuardPersonality.getSelectedIndex()+1);
 				dispose();} });
 		btnReturn.setBounds(172, 137, 97, 25);
+		btnReturn.setFocusable(false);
 		getContentPane().add(btnReturn);
 	}
 	private void initialize() {
 		init1();
 		init2();
-		 returnListener();
-		
-
+		returnListener();
 	}
 
 	public void setvisible(boolean b) {
