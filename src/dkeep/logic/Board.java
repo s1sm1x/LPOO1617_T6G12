@@ -1,6 +1,7 @@
 package dkeep.logic;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Board implements Serializable{
 
@@ -10,6 +11,13 @@ public class Board implements Serializable{
 	private static final long serialVersionUID = -4604242787779813790L;
 	private int level = 1;
 	private boolean board2keyCaptured= false;
+	private Point heroPositionLevel1 ;
+	private Point heroPositionLevel2;
+	private Point keyPositionLevel1;
+	private Point keyPositionLevel2;
+	private ArrayList<Point> ogresPositions = new ArrayList<>();
+	private Point guardPosition;
+	
 	
 	private  char[][] board= {
 			{'X','X','X','X','X','X','X','X','X','X'},
@@ -234,6 +242,68 @@ public class Board implements Serializable{
 	public final boolean isCorner(int x, int y)
 	{
 		return (x == 0 && y == 0) || (x == 0 && y == board[0].length - 1) || (x == board.length - 1 && y == 0) || (x == board.length - 1 && y == board[0].length - 1);
+	}
+	public Point getHeroPositionLevel1() {
+		return heroPositionLevel1;
+	}
+	public void setHeroPositionLevel1(Point heroPositionLevel1) {
+		this.heroPositionLevel1 = heroPositionLevel1;
+		System.out.println("adiciono level 1 hero");
+	}
+	public Point getHeroPositionLevel2() {
+		return heroPositionLevel2;
+	}
+	public void setHeroPositionLevel2(Point heroPositionLevel2) {
+		this.heroPositionLevel2 = heroPositionLevel2;
+		System.out.println("adiciono level 2 hero");
+	}
+	public Point getKeyPositionLevel1() {
+		return keyPositionLevel1;
+	}
+	public void setKeyPositionLevel1(Point keyPositionLevel1) {
+		this.keyPositionLevel1 = keyPositionLevel1;
+		System.out.println("adiciono level 1 key");
+	}
+	public Point getKeyPositionLevel2() {
+		return keyPositionLevel2;
+	}
+	public void setKeyPositionLevel2(Point keyPositionLevel2) {
+		this.keyPositionLevel2 = keyPositionLevel2;
+		System.out.println("adiciono level 2 key");
+	}
+	public Point getGuardPosition() {
+		return guardPosition;
+	}
+	public void setGuardPosition(Point guardPosition) {
+		this.guardPosition = guardPosition;
+		System.out.println("adiciono guarda");
+	}
+	public ArrayList<Point> getOgresPositions() {
+		return ogresPositions;
+	}
+	public void addOgrePosition ( Point ogrePosition ) {
+		this.ogresPositions.add(ogrePosition);
+		System.out.println("adiciono ogre");
+	}
+	public void removeOgrePosition ( Point ogrePosition ) {
+		this.ogresPositions.remove(ogrePosition);
+		System.out.println("removi ogre de: "+ ogrePosition);
+	}
+	
+	public void fillEmptySpaces() {		
+		
+		for( int o =0; o<board.length; o++){ 
+			for( int p = 0 ; p < board[0].length ; p++){
+				if((board[o][p] != 'X') && (board[o][p] != 'k') && (board[o][p] != 'G')&& (board[o][p] != 'H')&& (board[o][p] != 'I'))
+					board[o][p]=' ';
+			}
+		}
+		for( int o =0; o<board2.length; o++){ 
+			for( int p = 0 ; p < board2[0].length ; p++){
+				if((board2[o][p] != 'X') && (board2[o][p] != 'k') && (board2[o][p] != 'O')&& (board2[o][p] != 'H')&& (board2[o][p] != 'I'))
+					board2[o][p]=' ';
+			}
+		}
 	}
 
 }

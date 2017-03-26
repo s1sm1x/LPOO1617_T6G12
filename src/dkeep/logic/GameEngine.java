@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import dkeep.cli.*;
+import dkeep.guiGuided.InterfaceGUI;
 
 public class GameEngine  implements Serializable{
 	/**
@@ -16,19 +17,19 @@ public class GameEngine  implements Serializable{
 	private static  boolean playerWon=false;
 	private static boolean keepFirstGame=true;
 	private static  boolean keepSecondGame=true;
-	private static DungeonKeepCLI cli;
-	private static Board board;
-	private static Hero hero;
-	private static Key key;
-	private static Guard guard;
-	private static ArrayList<Ogre> ogres= new ArrayList<Ogre>();
-	private static Ogre testOgre;
+	private  DungeonKeepCLI cli;
+	private  Board board;
+	private  Hero hero;
+	private  Key key;
+	private  Guard guard;
+	private  ArrayList<Ogre> ogres= new ArrayList<Ogre>();
+	private  Ogre testOgre;
 
-	private static Point guardPosition = new Point(8,1);
-	private static Point level1HeroPosition=new Point(1,5);
-	private static Point level2HeroPosition= new Point(1,6);
-	private static Point level2KeyPosition= new Point( 8,1 );
-	private static Point level1KeyPosition=new Point(1,6);
+	private  Point guardPosition = new Point(8,1);
+	private  Point level1HeroPosition=new Point(1,5);
+	private  Point level2HeroPosition= new Point(1,6);
+	private  Point level2KeyPosition= new Point( 8,1 );
+	private  Point level1KeyPosition=new Point(1,6);
 	/**
 	 * default constructor for gameEngine
 	 */
@@ -286,7 +287,7 @@ public class GameEngine  implements Serializable{
 	 * getter for guardtype
 	 * @return String with guard type
 	 */
-	public static String getGuardType() {
+	public  String getGuardType() {
 		return guard.getGuardType();
 	}
 	/**
@@ -337,7 +338,7 @@ public class GameEngine  implements Serializable{
 	 * getter for board
 	 * @return board at moment
 	 */
-	public static Board getBoard() {
+	public  Board getBoard() {
 		return board;
 	}
 	/**
@@ -400,62 +401,51 @@ public class GameEngine  implements Serializable{
 		keepSecondGame=true;
 
 	}
+
+	private void handleBoardLevel2(){
+		hero.setHeroPosition(level2HeroPosition);
+		hero.setHeroIcon('A');
+		key= new Key(level2KeyPosition);
+		key.placeKey(board);
+		board.placeSymbol(hero.getX(),hero.getY(),hero.getHeroIcon() );
+		for (Ogre ogreIt : ogres) {
+			board.placeSymbol(ogreIt.getX(),ogreIt.getY(), ogreIt.getOgreIcon());
+		}
+	}
+	private void setGameStates(){
+		gameOver=true;
+		playerWon=false;
+		keepSecondGame=false;
+		keepFirstGame=false;
+	}
 	/**
 	 * Game Logic caller to handle user entered movement  
 	 * @param move desired direction
 	 * @return String to display some feedback about game state to the user
 	 * @throws Throwable
 	 */
-	public String handleSelectedHeroMovement(Direction move) throws Throwable{
+	public String handleSelectedHeroMovement(Direction move){
 		String messageTodisplay="";
 		if(keepFirstGame && board.getLevel()==1) 
 		{	hero.move(board, move);
 		messageTodisplay="you must escape from the Dungeon Keep";
-
 		guard.move(board, "");
 		if(!hero.checkSecurityDistance(board)){
-			gameOver=true;
-			playerWon=false;
-			keepSecondGame=false;
-			keepFirstGame=false;
-		}
-		if(board.getLevel()==2) // iniciar as restantes entidades antes de desenhar
-		{
-
-			hero.setHeroPosition(level2HeroPosition);
-			hero.setHeroIcon('A');
-			key= new Key(level2KeyPosition);
-			key.placeKey(board);
-			board.placeSymbol(hero.getX(),hero.getY(),hero.getHeroIcon() );
-			for (Ogre ogreIt : ogres) {
-				board.placeSymbol(ogreIt.getX(),ogreIt.getY(), ogreIt.getOgreIcon());
-			}
-
-
-			messageTodisplay="you must escape from the Dungeon Keep ";
-		}
-
-
-		}
+			setGameStates();}
+		if(board.getLevel()==2) 
+		{handleBoardLevel2();
+		messageTodisplay="you must escape from the Dungeon Keep ";}}
 		else if(keepSecondGame){
-			{
-				guard.destroyGuard();
-				//board.draw();
-				hero.move(board, move);
-				moveOgres(board,key);
-				attackNearbyOgres(board, hero.getHeroIcon());
-				if(!hero.checkSecurityDistance(board)){
-					gameOver=true;
-					playerWon=false;
-					keepSecondGame=false;
-				}
-
-			}
-		}
-
-		return messageTodisplay;
-
-	}
+			{guard.destroyGuard();
+			hero.move(board, move);
+			moveOgres(board,key);
+			attackNearbyOgres(board, hero.getHeroIcon());
+			if(!hero.checkSecurityDistance(board)){
+				gameOver=true;
+				playerWon=false;
+				keepSecondGame=false;
+			}}}
+		return messageTodisplay;}
 	/**
 	 * writes game state to an output stream
 	 * @param aOutputStream objectOutputStream to write to
@@ -463,8 +453,8 @@ public class GameEngine  implements Serializable{
 	 */
 	public static void write(ObjectOutputStream oout) throws IOException
 	{
-		
-/*
+
+		/*
 		oout.writeObject(board);
 		oout.writeObject(hero);
 		oout.writeObject(key);
@@ -481,7 +471,7 @@ public class GameEngine  implements Serializable{
 		{
 			oout.writeObject(ogre);
 		}
-*/
+		 */
 	}
 	/**
 	 * reads the game state from an input stream
@@ -489,7 +479,7 @@ public class GameEngine  implements Serializable{
 	 * @throws IOException if stream invalid, insufficient permissions or file not found
 	 * @throws ClassNotFoundException if the application tries to load a class that doesn't exist
 	 */
-	public static void read(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException
+	public  void read(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException
 	{
 		board= (Board) aInputStream.readObject();
 		hero = (Hero) aInputStream.readObject();
@@ -508,6 +498,33 @@ public class GameEngine  implements Serializable{
 		}
 
 	}
+	public void reinitializeCustom(Board tempBoard) {
+		reinitialize();
+		this.board= tempBoard;
+		level1HeroPosition=tempBoard.getHeroPositionLevel1();
+		System.out.println("level 1 hero: "+level1HeroPosition);
+		level2HeroPosition=tempBoard.getHeroPositionLevel2();
+		System.out.println("level 2 hero: "+level2HeroPosition);
+		level1KeyPosition=tempBoard.getKeyPositionLevel1();
+		System.out.println("level 1 key: "+level1KeyPosition);
+		level2KeyPosition= tempBoard.getHeroPositionLevel2();
+		System.out.println("level 2 key: "+level2KeyPosition);
+		guardPosition= tempBoard.getGuardPosition();
+		System.out.println("guard position: "+guardPosition);
+		ArrayList<Point> tempOgresPositons= tempBoard.getOgresPositions();
+		for (int i = 0 ; i <tempOgresPositons.size(); i++)
+		{
+			ogres.add(new Ogre(tempOgresPositons.get(i)));
+		}
+		InterfaceGUI.setOgresNumber(tempOgresPositons.size());
+		board.setLevel(1);
+		initializeEntitiesAndKey(level1HeroPosition, guardPosition,level1KeyPosition , false);
+		this.board.draw();
+		board.setLevel(2);
+		System.out.println("........................");
+		this.board.draw();
+		board.setLevel(1);
+	}
 
 	/*public static void initializeCustom(ObjectInputStream oin) throws ClassNotFoundException, IOException {
 		board = (Board) oin.readObject();
@@ -524,8 +541,8 @@ System.out.println("2");
 			System.out.println("1");
 			ogres.add(new Ogre ((Point)oin.readObject()));
 		}
-		
-		
+
+
 	}*/
 }
 

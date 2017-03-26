@@ -10,7 +10,7 @@ public class Ogre extends Entity implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 7096410761853288544L;
-	private MassiveClub massiveClub= new MassiveClub(new Point(2,1));// inicia club à sorte
+	private MassiveClub massiveClub= new MassiveClub(new Point(2,1));
 	private char ogreIcon= 'O';
 	private int roundsStunnedCounter = 0;
 	private static final Random r = new Random();

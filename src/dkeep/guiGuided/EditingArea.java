@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import dkeep.logic.Board;
+import dkeep.logic.Direction;
 import dkeep.logic.Guard;
 import dkeep.logic.Ogre;
 import dkeep.logic.Point;
@@ -30,12 +31,7 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	protected int numHerosSecondLevel;
 	protected int numKeysFirstLevel;
 	protected int numKeysSecondLevel;
-	private Point guardPosition;
-	private Point level1HeroPosition;
-	private Point level2HeroPosition;
-	private Point level1KeyPosition;
-	private Point level2KeyPosition;
-	private ArrayList<Point> ogresPositionArray;
+
 
 
 	public EditingArea()
@@ -80,12 +76,8 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 		numHerosSecondLevel = 0;
 	}
 
-	private void updateCounters()
-	{
-		int initialLevel= board.getLevel();
-		resetCounters();
+	private void updateFirstLevelCounters(){
 		board.setLevel(1);
-		//First Level Counters
 		for (int i = 0; i < boardHeight; i++)
 		{
 			for (int j = 0; j < boardWidth; j++)
@@ -103,11 +95,9 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 					break;
 				case 'G':
 					++numGuards;
-					break;
-				}
-			}
-		}
-		//Second Level Counters
+					break;}}}
+	}
+	private void updateSecondLevelCounters(){
 		board.setLevel(2);
 		for (int i = 0; i < boardHeight; i++)
 		{
@@ -126,17 +116,22 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 					break;
 				case 'k':
 					++numKeysSecondLevel;
-					break;
-
-				}
-			}
-		}
+					break;}}}
+	}
+	private void updateCounters()
+	{
+		int initialLevel= board.getLevel();
+		resetCounters();
+		//First Level Counters
+		updateFirstLevelCounters();
+		//Second Level Counters
+		updateSecondLevelCounters();
 		board.setLevel(initialLevel);
 	}
 	protected void writeBoard(ObjectOutputStream s) throws IOException
 	{
 		s.writeObject(board);
-	
+
 	}
 	@Override
 	protected void initializeBoard(int w, int h)
@@ -160,7 +155,18 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 
 	private void placeDoor(int x, int y)
 	{
-		if ( numDoorsFirstLevel< maxDoors || numDoorsSecondLevel< maxDoors)
+		boolean placementAllowed= false;
+		switch(board.getLevel())
+		{
+		case 1:
+			placementAllowed= (numDoorsFirstLevel< maxDoors);
+			break;
+		case 2:
+			placementAllowed= (numDoorsSecondLevel< maxDoors);
+			break;
+		}
+
+		if ( placementAllowed )
 		{
 			if (board.symbolAt(x, y)== 'X')
 			{
@@ -196,7 +202,7 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 			else
 			{
 				writeSymbol(x, y, 'O');
-				//ogresPositionArray.add(new Point(x,y));
+				board.addOgrePosition(new Point(x,y));
 			}
 		}
 		else
@@ -207,7 +213,18 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 
 	private void placeHero(int x, int y)
 	{
-		if (numHerosFirstLevel <= maxHeros || numHerosSecondLevel <= maxHeros)
+		boolean placementAllowed= false;
+		switch(board.getLevel())
+		{
+		case 1:
+			placementAllowed= (numHerosFirstLevel < maxHeros);
+			break;
+		case 2:
+			placementAllowed= (numHerosSecondLevel < maxHeros);
+			break;
+		}
+
+		if ( placementAllowed )
 		{
 			if (board.symbolAt(x, y)== 'X')
 			{
@@ -216,15 +233,17 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 			else
 			{
 				writeSymbol(x, y, 'H');
-				/*switch(board.getLevel())
+				switch(board.getLevel())
 				{
-				case 1:
-					level1HeroPosition = new Point(x,y);
+				case 1 :
+					board.setHeroPositionLevel1(new Point(x,y));
 					break;
 				case 2:
-					level2HeroPosition = new Point(x,y);
-					break;				
-				}*/
+					board.setHeroPositionLevel2(new Point(x,y));
+					break;
+				}
+
+
 			}
 		}
 		else
@@ -244,9 +263,7 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 			else
 			{
 				writeSymbol(x, y, 'G');
-				//editorGuard= new Guard( new Point(x,y));
-				//guardPosition= new Point( x , y);
-				
+				board.setGuardPosition( new Point (x,y));
 			}
 		}
 		else
@@ -258,7 +275,17 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 
 	private void placeKey(int x, int y)
 	{
-		if (numKeysFirstLevel <= maxKeys || numKeysSecondLevel <= maxKeys )
+		boolean placementAllowed= false;
+		switch(board.getLevel())
+		{
+		case 1:
+			placementAllowed= (numKeysFirstLevel <  maxKeys);
+			break;
+		case 2:
+			placementAllowed= (numKeysSecondLevel <  maxKeys);
+			break;
+		}
+		if ( placementAllowed )
 		{
 			if (board.symbolAt(x, y)== 'X')
 			{
@@ -267,15 +294,15 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 			else
 			{
 				writeSymbol(x, y, 'k');
-				/*switch(board.getLevel())
+				switch(board.getLevel())
 				{
 				case 1:
-					level1KeyPosition = new Point(x,y);
+					board.setKeyPositionLevel1(new Point(x,y));
 					break;
 				case 2:
-					level2KeyPosition = new Point(x,y);
+					board.setKeyPositionLevel2(new Point(x,y));
 					break;				
-				}*/
+				}
 			}
 		}
 		else
@@ -293,21 +320,13 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	{
 		if( board.symbolAt(x, y)=='O')
 		{
-			for( Point ogrePoint : ogresPositionArray)
-			{
+			board.removeOgrePosition(new Point(x,y));
 
-				/*if( ogrePoint== new Point(x,y))
-				{
-					ogresPositionArray.remove(ogresPositionArray.indexOf(ogrePoint));
-					break;
-				}*/
-			}
-				
 		}
 		writeSymbol(x, y, ' ');
-		
+
 	}
-	
+
 
 	private void writeSymbol(int x, int y, char s)
 	{
@@ -337,6 +356,7 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 			break;
 		case 'O':
 			placeOgre(x, y);
+			board.draw();
 			break;
 		case 'X':
 			placeWall(x, y);
@@ -359,117 +379,90 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	protected boolean validateBoard()
 	{
 		boolean validationSuccessful = true;
-
 		updateCounters();
-
 		String dialogMessage = "";
-
 		if (numHerosFirstLevel < 1 || numHerosSecondLevel < 1)
 		{
 			dialogMessage += "You must place the hero first in both levels.\n";
 			validationSuccessful = false;
 		}
-
 		if (numDoorsFirstLevel < 1  || numDoorsSecondLevel < 1)
 		{
 			dialogMessage += "You must place an exit in both levels.\n";
 			validationSuccessful = false;
 		}
-
 		if (numOgres < 1)
 		{
 			dialogMessage += "You must place at least one ogre on second level.\n";
 			validationSuccessful = false;
 		}
-
 		if (numKeysFirstLevel < 1 || numKeysSecondLevel < 1)
 		{
 			dialogMessage += "You must place the key in both levels.\n";
 			validationSuccessful = false;
 		}
-
 		if (numGuards < 1)
 		{
 			dialogMessage += "You must place the guard on first level.\n";
 			validationSuccessful = false;
 		}
-
 		if (!checkBoundaries())
 		{
 			dialogMessage += "Board boundaries must have exactly one exit and everything else walls.\n";
 			validationSuccessful = false;
 		}
-		/*ArrayList<Point> editorGuardPoints = new ArrayList<>();
-		editorGuardPoints=editorGuard.checkGuardFreePath(board);
-		if (editorGuardPoints.size()!=0 )
+		boolean guardPathValidated= true;
+		board.fillEmptySpaces();
+		board.setLevel(1);
+		if( board.getGuardPosition()!= null)
 		{
-			dialogMessage += "Guard must have empty path, check position to replace !\n";
-			validationSuccessful = false;
-			for(Point point: editorGuardPoints)
+			Guard tempGuard= new Guard( board.getGuardPosition());
+			Direction[] guardRelativeMoves= tempGuard.getguardMoves();
+			for (int i = 0; i < guardRelativeMoves.length; i++)
 			{
-				placeCross(point.getX(), point.getY());
+				Point relativeBoardPoint= tempGuard.directionToRelativePoint(guardRelativeMoves[i]);
+				Point absoluteBoardPoint = new Point (tempGuard.getX()+relativeBoardPoint.getX(),tempGuard.getY()+relativeBoardPoint.getY());
+				tempGuard.setPosition(absoluteBoardPoint);
+				if( board.symbolAt(absoluteBoardPoint.getX(), absoluteBoardPoint.getY())!=' ' && board.symbolAt(absoluteBoardPoint.getX(), absoluteBoardPoint.getY())!='G')
+				{
+					board.placeSymbol(absoluteBoardPoint.getX(), absoluteBoardPoint.getY(), 'x');
+					validationSuccessful = false;
+					guardPathValidated= false;
+				}
 			}
 		}
-		 */
 		if (validationSuccessful)
 		{
 			JOptionPane.showMessageDialog(getParent(), "Board validated successfully!", "Validation results", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else
 		{
+			if(!guardPathValidated)
+			{
+				dialogMessage += "Guard path must be empty and not to go outside board boundaries.\n";
+				repaint();
+			}
 			JOptionPane.showMessageDialog(getParent(), dialogMessage, "Validation results", JOptionPane.ERROR_MESSAGE);
 
 		}
-
 		return validationSuccessful;
 	}
 
 	private boolean checkBoundaries()
-	{
-		boolean foundExit = false;
-		int initialLevel= board.getLevel();
-
-		for ( int i =1 ; i<3; i++)
-		{
-			board.setLevel(i);
-			for (int x = 0; x < boardWidth; x++)
-			{
-				if (board.symbolAt(x, 0) != 'X' && board.symbolAt(x, 0) != 'I')
-				{
-					return false;
-				}
-
-				if (board.symbolAt(x, boardHeight - 1) != 'X' && board.symbolAt(x, boardHeight - 1) != 'I')
-				{
-					return false;
-				}
-
-				if (board.symbolAt(x, 0) == 'I' || board.symbolAt(x, boardHeight - 1) == 'I')
-				{
-					foundExit = true;
-				}
-			}
-
-			for (int y = 0; y < boardHeight; y++)
-			{
-				if (board.symbolAt(0, y) != 'X' && board.symbolAt(0, y) != 'I')
-				{
-					return false;
-				}
-
-				if (board.symbolAt(boardWidth - 1, y) != 'X' && board.symbolAt(boardWidth - 1, y) != 'I')
-				{
-					return false;
-				}
-
-				if (board.symbolAt(0, y) == 'I' || board.symbolAt(boardWidth - 1, y) == 'I')
-				{
-					foundExit = true;
-				}
-			}
-		}
-		board.setLevel(initialLevel);
-		return foundExit;
+	{boolean foundExit = false;
+	int initialLevel= board.getLevel();
+	for ( int i =1 ; i<3; i++)
+	{board.setLevel(i);
+	for (int x = 0; x < boardWidth; x++)
+	{if (board.symbolAt(x, 0) != 'X' && board.symbolAt(x, 0) != 'I')return false;
+	if (board.symbolAt(x, boardHeight - 1) != 'X' && board.symbolAt(x, boardHeight - 1) != 'I')	return false;
+	if (board.symbolAt(x, 0) == 'I' || board.symbolAt(x, boardHeight - 1) == 'I')foundExit = true;}
+	for (int y = 0; y < boardHeight; y++)
+	{	if (board.symbolAt(0, y) != 'X' && board.symbolAt(0, y) != 'I')
+	{return false;}
+	if (board.symbolAt(boardWidth - 1, y) != 'X' && board.symbolAt(boardWidth - 1, y) != 'I')return false;
+	if (board.symbolAt(0, y) == 'I' || board.symbolAt(boardWidth - 1, y) == 'I')foundExit = true;}}
+	board.setLevel(initialLevel);return foundExit;
 	}
 
 	@Override
@@ -520,9 +513,13 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 		return board.getLevel();
 	}
 
-	
+	public void fillEmptySpaces() {
+		super.fillEmptySpaces();
+	}
 
-	
+
+
+
 
 
 }

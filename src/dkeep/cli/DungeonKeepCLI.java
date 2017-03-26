@@ -9,7 +9,7 @@ public class DungeonKeepCLI {
 	final static Scanner reader = new Scanner(System.in);
 	private static GameEngine gameEngine= new GameEngine();
 	private static String objective="";
-	public static void main(String[] args) throws Throwable {
+	public static void main(String[] args) {
 		selectGuard();
 		selectNumberOgres();
 		gameEngine.draw();

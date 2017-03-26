@@ -167,7 +167,7 @@ public class DrawingArea extends JPanel
 		}
 		catch (final IOException ex)
 		{
-			GUIBoardEditor.abort(ex, null);
+			GUIMain.close(ex, null);
 		}
 	}
 
@@ -196,21 +196,16 @@ public class DrawingArea extends JPanel
 	}
 
 	
-
 	@Override
 	public final void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(0, 0, getSize().width, getSize().height);
-
 		int y = 0;
-
 		for (int i = 0; i < boardHeight; i++)
 		{
 			int x = 0;
-
 			for (int j = 0; j < boardWidth; j++)
 			{
 				graphicsBuffer.drawImage(resizedFloor, x, y, null);
@@ -267,9 +262,14 @@ public class DrawingArea extends JPanel
 			}
 			y += spriteHeight;
 		}
-
 		Toolkit.getDefaultToolkit().sync();
 		g.drawImage(graphics2d, 0, 0, null);
 	}
+
+	public void fillEmptySpaces() {
+		board.fillEmptySpaces();
+		
+	}
+	
 	
 }
