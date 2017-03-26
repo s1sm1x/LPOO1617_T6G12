@@ -2,16 +2,10 @@ package dkeep.guiGuided;
 
 import java.awt.event.*;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-
 import javax.swing.*;
-
-import dkeep.logic.Board;
 import dkeep.logic.Direction;
 import dkeep.logic.Guard;
-import dkeep.logic.Ogre;
 import dkeep.logic.Point;
 
 public class EditingArea extends DrawingArea implements MouseListener, MouseMotionListener
@@ -117,9 +111,7 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	{
 		int initialLevel= board.getLevel();
 		resetCounters();
-		//First Level Counters
 		updateFirstLevelCounters();
-		//Second Level Counters
 		updateSecondLevelCounters();
 		board.setLevel(initialLevel);
 	}
@@ -140,7 +132,6 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	protected void erase()
 	{
 		super.erase();
-
 	}
 
 	protected void setSymbol(char s)
@@ -219,18 +210,18 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	private void placeGuard(int x, int y)
 	{
 		if (numGuards < maxGuards){
-		
+
 			if (board.symbolAt(x, y)== 'X')
-			
+
 				JOptionPane.showMessageDialog(getParent(), "Guards must not be placed on board borders!", "Error", JOptionPane.ERROR_MESSAGE);
-			
+
 			else{
-			
+
 				writeSymbol(x, y, 'G');
 				board.setGuardPosition( new Point (x,y));}
 		}else
 			JOptionPane.showMessageDialog(getParent(), "Number of guards must not be greater than 1!", "Error", JOptionPane.ERROR_MESSAGE);
-		
+
 	}
 
 
@@ -466,61 +457,6 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	public void fillEmptySpaces() {
 		super.fillEmptySpaces();
 	}
-
-
-	/*validate board working
-	 * 
-	 * if (numHerosFirstLevel < 1 || numHerosSecondLevel < 1)
-	{
-		dialogMessage += "You must place the hero first in both levels.\n";
-		validationSuccessful = false;
-	}
-	if (numDoorsFirstLevel < 1  || numDoorsSecondLevel < 1)
-	{
-		dialogMessage += "You must place an exit in both levels.\n";
-		validationSuccessful = false;
-	}
-	if (numOgres < 1)
-	{
-		dialogMessage += "You must place at least one ogre on second level.\n";
-		validationSuccessful = false;
-	}
-	if (numKeysFirstLevel < 1 || numKeysSecondLevel < 1)
-	{
-		dialogMessage += "You must place the key in both levels.\n";
-		validationSuccessful = false;
-	}
-	if (numGuards < 1)
-	{
-		dialogMessage += "You must place the guard on first level.\n";
-		validationSuccessful = false;
-	}
-	if (!checkBoundaries())
-	{
-		dialogMessage += "Board boundaries must have exactly one exit and everything else walls.\n";
-		validationSuccessful = false;
-	}
-	board.fillEmptySpaces();
-	board.setLevel(1);
-	if( board.getGuardPosition()!= null)
-	{
-		Guard tempGuard= new Guard( board.getGuardPosition());
-		Direction[] guardRelativeMoves= tempGuard.getguardMoves();
-		for (int i = 0; i < guardRelativeMoves.length; i++)
-		{
-			Point relativeBoardPoint= tempGuard.directionToRelativePoint(guardRelativeMoves[i]);
-			Point absoluteBoardPoint = new Point (tempGuard.getX()+relativeBoardPoint.getX(),tempGuard.getY()+relativeBoardPoint.getY());
-			tempGuard.setPosition(absoluteBoardPoint);
-			if( board.symbolAt(absoluteBoardPoint.getX(), absoluteBoardPoint.getY())!=' ' && board.symbolAt(absoluteBoardPoint.getX(), absoluteBoardPoint.getY())!='G')
-			{
-				board.placeSymbol(absoluteBoardPoint.getX(), absoluteBoardPoint.getY(), 'x');
-				validationSuccessful = false;
-				guardPathValidated= false;
-			}
-		}
-	}
-	 */
-
 
 
 }

@@ -5,12 +5,9 @@ import java.util.ArrayList;
 
 public class Board implements Serializable{
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -4604242787779813790L;
 	private int level = 1;
-	private boolean board2keyCaptured= false;
 	private Point heroPositionLevel1 ;
 	private Point heroPositionLevel2;
 	private Point keyPositionLevel1;
@@ -146,8 +143,8 @@ public class Board implements Serializable{
 	}
 	/**
 	 * getter of symbol on a specific coordinate
-	 * @param x xaxis coordinate
-	 * @param y yaxis coordinate
+	 * @param x X coordinate
+	 * @param y Y coordinate
 	 * @return char representing the symbol
 	 */
 	public final char symbolAt(int x, int y){
@@ -178,17 +175,17 @@ public class Board implements Serializable{
 	public boolean placeSymbol(int x, int y, char s){
 
 		switch (level){
-		
+
 		case 1:
 			if (x >= 0 && x < board.length && y >= 0 && y < board[0].length){
 				board[y][x] = s;
 				return true;}break;
-			
+
 		case 2:
 			if (x >= 0 && x < board2.length && y >= 0 && y < board2[0].length){
 				board2[y][x] = s; 
 				return true;}break;
-			
+
 		}
 		return false;
 	}
@@ -232,53 +229,101 @@ public class Board implements Serializable{
 	{
 		return (x == 0 && y == 0) || (x == 0 && y == board[0].length - 1) || (x == board.length - 1 && y == 0) || (x == board.length - 1 && y == board[0].length - 1);
 	}
+	/**
+	 * getter for hero Position
+	 * @return Point coordinates
+	 */
 	public Point getHeroPositionLevel1() {
 		return heroPositionLevel1;
 	}
+	/**
+	 * setterfor hero position on level 1
+	 * @param heroPositionLevel1 desired position
+	 */
 	public void setHeroPositionLevel1(Point heroPositionLevel1) {
 		this.heroPositionLevel1 = heroPositionLevel1;
-		System.out.println("adiciono level 1 hero");
 	}
+	/**
+	 * getter for hero position on level 2
+	 * @return Point coordinates
+	 */
 	public Point getHeroPositionLevel2() {
 		return heroPositionLevel2;
 	}
+	/**
+	 * setter for hero position on level 2
+	 * @param heroPositionLevel2 desired position
+	 * 
+	 */
 	public void setHeroPositionLevel2(Point heroPositionLevel2) {
 		this.heroPositionLevel2 = heroPositionLevel2;
-		System.out.println("adiciono level 2 hero");
 	}
+	/**
+	 * getter for key position on level 1
+	 * @return Point coordinates
+	 */
 	public Point getKeyPositionLevel1() {
 		return keyPositionLevel1;
 	}
+	/**
+	 * setter for key position on level 1
+	 * @param keyPositionLevel1 Point coordinates
+	 */
 	public void setKeyPositionLevel1(Point keyPositionLevel1) {
 		this.keyPositionLevel1 = keyPositionLevel1;
-		System.out.println("adiciono level 1 key");
 	}
+	/**
+	 * getter for key position on level 2
+	 * @return Point coordinates
+	 */
 	public Point getKeyPositionLevel2() {
 		return keyPositionLevel2;
 	}
+	/**
+	 * setter for key position on level2 
+	 * @param keyPositionLevel2 Point coordinates
+	 */
 	public void setKeyPositionLevel2(Point keyPositionLevel2) {
 		this.keyPositionLevel2 = keyPositionLevel2;
-		System.out.println("adiciono level 2 key");
 	}
+	/**
+	 * getter for guard position 
+	 * @return Point coordinates
+	 */
 	public Point getGuardPosition() {
 		return guardPosition;
 	}
+	/**
+	 * setter for guard position
+	 * @param guardPosition desired position
+	 */
 	public void setGuardPosition(Point guardPosition) {
 		this.guardPosition = guardPosition;
-		System.out.println("adiciono guarda");
 	}
+	/**
+	 * getter for ogres posiitons array
+	 * @return Point array coordinates
+	 */
 	public ArrayList<Point> getOgresPositions() {
 		return ogresPositions;
 	}
+	/**
+	 * adds position to ogres Points array
+	 * @param ogrePosition
+	 */
 	public void addOgrePosition ( Point ogrePosition ) {
 		this.ogresPositions.add(ogrePosition);
-		System.out.println("adiciono ogre");
 	}
+	/**
+	 * remove ogre specific position 
+	 * @param ogrePosition desired ogre position to remove
+	 */
 	public void removeOgrePosition ( Point ogrePosition ) {
 		this.ogresPositions.remove(ogrePosition);
-		System.out.println("removi ogre de: "+ ogrePosition);
 	}
-
+	/**
+	 * fills empty spaces without any char with a ' '
+	 */
 	public void fillEmptySpaces() {		
 
 		for( int o =0; o<board.length; o++){ 

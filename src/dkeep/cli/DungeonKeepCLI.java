@@ -13,7 +13,7 @@ public class DungeonKeepCLI {
 		selectGuard();
 		selectNumberOgres();
 		gameEngine.draw();
-		while(!gameEngine.getGameOver()){
+		while(!GameEngine.getGameOver()){
 			objective= gameEngine.handleSelectedHeroMovement(readString()) ;
 			System.out.flush();
 			gameEngine.draw();
@@ -26,7 +26,6 @@ public class DungeonKeepCLI {
 	{
 		final Scanner input = new Scanner(System.in);
 		int number=0;
-		int counter;
 
 		do
 		{  
@@ -37,7 +36,7 @@ public class DungeonKeepCLI {
 
 
 		} while (number < i || number > j);
-
+		
 		return number;
 	}
 
