@@ -12,7 +12,7 @@ import dkeep.logic.Board;
 //import lpoo.gui.GUIGlobals;
 import dkeep.logic.Ogre;
 import dkeep.logic.Point;
- 
+
 
 import javax.swing.GroupLayout.Alignment;
 
@@ -35,6 +35,7 @@ public class GUIBoardEditor extends JFrame
 		editingArea = new EditingArea(w, h);
 		pnlEditor.setViewportView(editingArea);
 		buttonGroup1.clearSelection();
+
 	}
 
 	private void initComponents()
@@ -321,11 +322,12 @@ public class GUIBoardEditor extends JFrame
 		btnExit.setText("Exit");
 		mnFile.add(btnExit);
 		mbDefault.add(mnFile);
+
 		pack();
 		setLocationRelativeTo(null);
 	}
 
-private boolean loadFile()
+	private boolean loadFile()
 	{
 		FileInputStream fin;
 		ObjectInputStream oin;
@@ -351,13 +353,13 @@ private boolean loadFile()
 			setTitle("Board Builder - " + buffer.getAbsolutePath());
 			editingArea.initializeBoard((Board) oin.readObject());
 			editingArea.repaint();
-			
+
 			fin.close();
 			oin.close();
 		}
 		catch (IOException | ClassNotFoundException ex)
 		{
-			System.out.println("boa");//GUIGlobals.abort(ex, this);
+			GUIMain.close(ex, this);
 		}
 
 		return true;
@@ -367,39 +369,45 @@ private boolean loadFile()
 
 	private boolean saveFile(boolean overwrite)
 	{
-		FileOutputStream fout;
-		ObjectOutputStream oout;
-
-		if (buffer == null || overwrite)
+		if(editingArea.validateBoard())
 		{
-			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setFileFilter(new FileNameExtensionFilter(" Board  files (*.)", "board"));
+			editingArea.fillEmptySpaces();
+			FileOutputStream fout;
+			ObjectOutputStream oout;
 
-			if (fileChooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION)
+			if (buffer == null || overwrite)
 			{
-				return false;
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setFileFilter(new FileNameExtensionFilter(" Board  files (*.)", "board"));
+
+				if (fileChooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION)
+				{
+					return false;
+				}
+
+				buffer = new File(fileChooser.getSelectedFile() + ".board");
+				setTitle(" Builder - " + buffer.getAbsolutePath());
 			}
 
-			buffer = new File(fileChooser.getSelectedFile() + ".board");
-			setTitle(" Builder - " + buffer.getAbsolutePath());
+			try
+			{
+				fout = new FileOutputStream(buffer);
+				oout = new ObjectOutputStream(fout);
+				editingArea.writeBoard(oout);
+
+				fout.close();
+				oout.close();
+
+			}
+			catch (IOException ex)
+			{
+				GUIMain.close(ex, this);
+			}
+
+			return true;
 		}
-
-		try
-		{
-			fout = new FileOutputStream(buffer);
-			oout = new ObjectOutputStream(fout);
-			editingArea.writeBoard(oout);
-
-			fout.close();
-			oout.close();
-
-		}
-		catch (IOException ex)
-		{
-			abort(ex, this);
-		}
-
-		return true;
+		
+		return false;
 	}
 
 
@@ -422,16 +430,7 @@ private boolean loadFile()
 	{
 		confirmExit();
 	}
-	/**
-	 * shows an error message to the user and terminates program execution
-	 * @param ex an object containing the thrown exception
-	 * @param parent the JFrame that invoked this method
-	 */
-	protected static void abort(Exception ex, JFrame parent)
-	{
-		JOptionPane.showMessageDialog(parent, ex.getLocalizedMessage() + ".\nThe program will now exit...", "Critical Error", JOptionPane.ERROR_MESSAGE);
-		System.exit(0);
-	}
+
 
 	private EditingArea editingArea;
 	private JMenuItem btnAbout;

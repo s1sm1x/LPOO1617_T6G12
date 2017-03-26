@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import dkeep.logic.Board;
+import dkeep.logic.Direction;
 import dkeep.logic.Guard;
 import dkeep.logic.Ogre;
 import dkeep.logic.Point;
@@ -30,12 +31,7 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	protected int numHerosSecondLevel;
 	protected int numKeysFirstLevel;
 	protected int numKeysSecondLevel;
-	private Point guardPosition;
-	private Point level1HeroPosition;
-	private Point level2HeroPosition;
-	private Point level1KeyPosition;
-	private Point level2KeyPosition;
-	private ArrayList<Point> ogresPositionArray;
+
 
 
 	public EditingArea()
@@ -136,7 +132,7 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	protected void writeBoard(ObjectOutputStream s) throws IOException
 	{
 		s.writeObject(board);
-	
+
 	}
 	@Override
 	protected void initializeBoard(int w, int h)
@@ -160,7 +156,18 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 
 	private void placeDoor(int x, int y)
 	{
-		if ( numDoorsFirstLevel< maxDoors || numDoorsSecondLevel< maxDoors)
+		boolean placementAllowed= false;
+		switch(board.getLevel())
+		{
+		case 1:
+			placementAllowed= (numDoorsFirstLevel< maxDoors);
+			break;
+		case 2:
+			placementAllowed= (numDoorsSecondLevel< maxDoors);
+			break;
+		}
+
+		if ( placementAllowed )
 		{
 			if (board.symbolAt(x, y)== 'X')
 			{
@@ -196,7 +203,7 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 			else
 			{
 				writeSymbol(x, y, 'O');
-				//ogresPositionArray.add(new Point(x,y));
+				board.addOgrePosition(new Point(x,y));
 			}
 		}
 		else
@@ -207,30 +214,43 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 
 	private void placeHero(int x, int y)
 	{
-		if (numHerosFirstLevel <= maxHeros || numHerosSecondLevel <= maxHeros)
+		boolean placementAllowed= false;
+		switch(board.getLevel())
 		{
-			if (board.symbolAt(x, y)== 'X')
+		case 1:
+			placementAllowed= (numHerosFirstLevel < maxHeros);
+			break;
+		case 2:
+			placementAllowed= (numHerosSecondLevel < maxHeros);
+			break;
+		}
+		
+			if ( placementAllowed )
 			{
-				JOptionPane.showMessageDialog(getParent(), "Hero must not be placed on board borders!", "Error", JOptionPane.ERROR_MESSAGE);
+				if (board.symbolAt(x, y)== 'X')
+				{
+					JOptionPane.showMessageDialog(getParent(), "Hero must not be placed on board borders!", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				else
+				{
+					writeSymbol(x, y, 'H');
+					switch(board.getLevel())
+					{
+					case 1 :
+						board.setHeroPositionLevel1(new Point(x,y));
+						break;
+					case 2:
+						board.setHeroPositionLevel2(new Point(x,y));
+						break;
+					}
+
+
+				}
 			}
 			else
 			{
-				writeSymbol(x, y, 'H');
-				/*switch(board.getLevel())
-				{
-				case 1:
-					level1HeroPosition = new Point(x,y);
-					break;
-				case 2:
-					level2HeroPosition = new Point(x,y);
-					break;				
-				}*/
+				JOptionPane.showMessageDialog(getParent(), "Number of heros must not be greater than 1!", "Error", JOptionPane.ERROR_MESSAGE);
 			}
-		}
-		else
-		{
-			JOptionPane.showMessageDialog(getParent(), "Number of heros must not be greater than 1!", "Error", JOptionPane.ERROR_MESSAGE);
-		}
 	}
 
 	private void placeGuard(int x, int y)
@@ -244,9 +264,7 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 			else
 			{
 				writeSymbol(x, y, 'G');
-				//editorGuard= new Guard( new Point(x,y));
-				//guardPosition= new Point( x , y);
-				
+				board.setGuardPosition( new Point (x,y));
 			}
 		}
 		else
@@ -258,7 +276,17 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 
 	private void placeKey(int x, int y)
 	{
-		if (numKeysFirstLevel <= maxKeys || numKeysSecondLevel <= maxKeys )
+		boolean placementAllowed= false;
+		switch(board.getLevel())
+		{
+		case 1:
+			placementAllowed= (numKeysFirstLevel <  maxKeys);
+			break;
+		case 2:
+			placementAllowed= (numKeysSecondLevel <  maxKeys);
+			break;
+		}
+		if ( placementAllowed )
 		{
 			if (board.symbolAt(x, y)== 'X')
 			{
@@ -267,15 +295,15 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 			else
 			{
 				writeSymbol(x, y, 'k');
-				/*switch(board.getLevel())
+				switch(board.getLevel())
 				{
 				case 1:
-					level1KeyPosition = new Point(x,y);
+					board.setKeyPositionLevel1(new Point(x,y));
 					break;
 				case 2:
-					level2KeyPosition = new Point(x,y);
+					board.setKeyPositionLevel2(new Point(x,y));
 					break;				
-				}*/
+				}
 			}
 		}
 		else
@@ -293,21 +321,13 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	{
 		if( board.symbolAt(x, y)=='O')
 		{
-			for( Point ogrePoint : ogresPositionArray)
-			{
+			board.removeOgrePosition(new Point(x,y));
 
-				/*if( ogrePoint== new Point(x,y))
-				{
-					ogresPositionArray.remove(ogresPositionArray.indexOf(ogrePoint));
-					break;
-				}*/
-			}
-				
 		}
 		writeSymbol(x, y, ' ');
-		
+
 	}
-	
+
 
 	private void writeSymbol(int x, int y, char s)
 	{
@@ -337,6 +357,7 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 			break;
 		case 'O':
 			placeOgre(x, y);
+			board.draw();
 			break;
 		case 'X':
 			placeWall(x, y);
@@ -399,28 +420,46 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 			dialogMessage += "Board boundaries must have exactly one exit and everything else walls.\n";
 			validationSuccessful = false;
 		}
-		/*ArrayList<Point> editorGuardPoints = new ArrayList<>();
-		editorGuardPoints=editorGuard.checkGuardFreePath(board);
-		if (editorGuardPoints.size()!=0 )
+
+		boolean guardPathValidated= true;
+		//ArrayList<Point> unavailablePoints = new ArrayList<Point>();
+		board.fillEmptySpaces();
+		board.setLevel(1);
+		if( board.getGuardPosition()!= null)
 		{
-			dialogMessage += "Guard must have empty path, check position to replace !\n";
-			validationSuccessful = false;
-			for(Point point: editorGuardPoints)
+			Guard tempGuard= new Guard( board.getGuardPosition());
+			Direction[] guardRelativeMoves= tempGuard.getguardMoves();
+			for (int i = 0; i < guardRelativeMoves.length; i++)
 			{
-				placeCross(point.getX(), point.getY());
+				Point relativeBoardPoint= tempGuard.directionToRelativePoint(guardRelativeMoves[i]);
+				Point absoluteBoardPoint = new Point ( tempGuard.getX()+relativeBoardPoint.getX(),tempGuard.getY()+relativeBoardPoint.getY());
+				tempGuard.setPosition(absoluteBoardPoint);
+				if( board.symbolAt(absoluteBoardPoint.getX(), absoluteBoardPoint.getY())!=' ' && board.symbolAt(absoluteBoardPoint.getX(), absoluteBoardPoint.getY())!='G')
+				{
+					//unavailablePoints.add(absoluteBoardPoint);
+					board.placeSymbol(absoluteBoardPoint.getX(), absoluteBoardPoint.getY(), 'x');
+					validationSuccessful = false;
+					guardPathValidated= false;
+				}
 			}
+
 		}
-		 */
 		if (validationSuccessful)
 		{
 			JOptionPane.showMessageDialog(getParent(), "Board validated successfully!", "Validation results", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else
 		{
+			if(!guardPathValidated)
+			{
+				dialogMessage += "Guard path must be empty and not to go outside board boundaries.\n";
+				repaint();
+			}
+
+
 			JOptionPane.showMessageDialog(getParent(), dialogMessage, "Validation results", JOptionPane.ERROR_MESSAGE);
 
 		}
-
 		return validationSuccessful;
 	}
 
@@ -477,6 +516,7 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	{
 		placeSymbol(me.getX() / spriteWidth, me.getY() / spriteHeight, boardSymbol);
 
+
 	}
 
 	@Override
@@ -520,9 +560,13 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 		return board.getLevel();
 	}
 
-	
+	public void fillEmptySpaces() {
+		super.fillEmptySpaces();
+	}
 
-	
+
+
+
 
 
 }

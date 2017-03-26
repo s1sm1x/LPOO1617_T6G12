@@ -10,7 +10,7 @@ public class Ogre extends Entity implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 7096410761853288544L;
-	private MassiveClub massiveClub= new MassiveClub(new Point(2,1));// inicia club à sorte
+	private MassiveClub massiveClub= new MassiveClub(new Point(2,1));
 	private char ogreIcon= 'O';
 	private int roundsStunnedCounter = 0;
 	private static final Random r = new Random();
@@ -58,38 +58,29 @@ public class Ogre extends Entity implements Serializable{
 		boolean canMove = false;
 		Direction move = Direction.NONE;
 		Direction validMove= Direction.NONE;
-		ArrayList<Direction> allowedDirections= new ArrayList<>(Arrays.asList(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT));
-			
+		ArrayList<Direction> allowedDirections= new ArrayList<>(Arrays.asList(Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT));	
 		while(canMove == false){ 
-			if(allowedDirections.size()==0){
-			
+			if(allowedDirections.size()==0)
 				return Direction.NONE;
-				}
-		
 			move= allowedDirections.get(r.nextInt(allowedDirections.size()));
-			
 			if (move== Direction.UP){
 				canMove= checkPositionToMove(board, new Point(0,-1));
 				validMove= Direction.UP;
 				allowedDirections.remove(Direction.UP);
-			}
-			else if (move==Direction.LEFT){
+			}else if (move==Direction.LEFT){
 				canMove= checkPositionToMove(board, new Point(-1, 0));
 				validMove= Direction.LEFT;
 				allowedDirections.remove(Direction.LEFT);
-			}
-			else if (move==Direction.DOWN){
+			}else if (move==Direction.DOWN){
 				canMove= checkPositionToMove(board, new Point(0,1)); 
 				validMove= Direction.DOWN;
 				allowedDirections.remove(Direction.DOWN);
-			}
-			else if (move==Direction.RIGHT){
+			}else if (move==Direction.RIGHT){
 				canMove= checkPositionToMove(board, new Point(1,0)); 
 				validMove= Direction.RIGHT;
 				allowedDirections.remove(Direction.RIGHT);
+				}	
 			}
-		}
-		
 		return validMove;
 	}
 /**
