@@ -148,53 +148,61 @@ public class Guard extends Entity  implements Serializable{
 				moveForward(board);
 				break;
 			case "Drunken":
-				lastGuardIcon=guardIcon;
-
-				guardIcon=patrol.charAt(a.nextInt(patrol.length()));
-				if (guardIcon!='g')
-					sleeping=false;
-
-				if(guardIcon=='G' && guardIcon== lastGuardIcon){
-					if(direction=='B'){
-						moveBackward(board);
-					}
-					else if(direction=='F'){
-						moveForward(board);
-					}
-				}
-				else if(guardIcon=='G' && guardIcon!=lastGuardIcon){
-					direction=directionPatrol.charAt(a.nextInt(directionPatrol.length()));
-					if(direction=='B'){
-						moveBackward(board);
-					}
-					else if(direction=='F'){
-						moveForward(board);
-					}
-				}
-				else if(guardIcon=='g'){
-					board.placeSymbol(pos.getX(), pos.getY(), ' ');
-					board.placeSymbol(pos.getX(), pos.getY(), guardIcon);
-					sleeping=true;
-				}
+				drunkenMovement( board);
 				break;
 			case "Suspicious":
-				lastdirection=direction;
-				if(counterForTurn>3){
-					direction=directionPatrol.charAt(a.nextInt(directionPatrol.length()));
-				}
-				if(lastdirection!=direction)
-					counterForTurn=0;
-				counterForTurn++;
-				if(direction=='B'){ 
-					moveBackward(board);	
-				}
-				else if(direction=='F'){
-					moveForward(board);
-				}
+				suspiciousMovement(board);
 				break;
 			}
 		}
 	}
+	private void suspiciousMovement(Board board){
+		lastdirection=direction;
+		if(counterForTurn>3){
+			direction=directionPatrol.charAt(a.nextInt(directionPatrol.length()));
+		}
+		if(lastdirection!=direction)
+			counterForTurn=0;
+		counterForTurn++;
+		if(direction=='B'){ 
+			moveBackward(board);	
+		}
+		else if(direction=='F'){
+			moveForward(board);
+		}
+	}
+	private void drunkenMovement(Board board){
+		lastGuardIcon=guardIcon;
+
+		guardIcon=patrol.charAt(a.nextInt(patrol.length()));
+		if (guardIcon!='g')
+			sleeping=false;
+
+		if(guardIcon=='G' && guardIcon== lastGuardIcon){
+			if(direction=='B'){
+				moveBackward(board);
+			}
+			else if(direction=='F'){
+				moveForward(board);
+			}
+		}
+		else if(guardIcon=='G' && guardIcon!=lastGuardIcon){
+			direction=directionPatrol.charAt(a.nextInt(directionPatrol.length()));
+			if(direction=='B'){
+				moveBackward(board);
+			}
+			else if(direction=='F'){
+				moveForward(board);
+			}
+		}
+		else if(guardIcon=='g'){
+			board.placeSymbol(pos.getX(), pos.getY(), ' ');
+			board.placeSymbol(pos.getX(), pos.getY(), guardIcon);
+			sleeping=true;
+		}
+	}
+	
+	
 	/**guard extended check position, not needed due to guard's fixed moves
 	 * 
 	 */
