@@ -78,8 +78,6 @@ public class OptionsGUI extends JFrame {
 		init1();
 		init2();
 		 returnListener();
-		
-
 	}
 
 	public void setvisible(boolean b) {

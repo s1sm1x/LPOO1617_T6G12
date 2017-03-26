@@ -196,16 +196,21 @@ public class DrawingArea extends JPanel
 	}
 
 	
+
 	@Override
 	public final void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(0, 0, getSize().width, getSize().height);
+
 		int y = 0;
+
 		for (int i = 0; i < boardHeight; i++)
 		{
 			int x = 0;
+
 			for (int j = 0; j < boardWidth; j++)
 			{
 				graphicsBuffer.drawImage(resizedFloor, x, y, null);
@@ -262,6 +267,7 @@ public class DrawingArea extends JPanel
 			}
 			y += spriteHeight;
 		}
+
 		Toolkit.getDefaultToolkit().sync();
 		g.drawImage(graphics2d, 0, 0, null);
 	}
@@ -270,6 +276,20 @@ public class DrawingArea extends JPanel
 		board.fillEmptySpaces();
 		
 	}
-	
+	/*
+	 * protected void erase()
+	{
+		final char[][] newMatrix = new char[boardHeight][boardWidth];
+
+		for (final char[] row : newMatrix)
+		{
+			Arrays.fill(row, ' ');
+		}
+
+		board.setMatrix(newMatrix,1);
+		board.setMatrix(newMatrix,2);
+		repaint();
+	}
+	 */
 	
 }
