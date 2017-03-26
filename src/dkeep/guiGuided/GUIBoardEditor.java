@@ -37,10 +37,7 @@ public class GUIBoardEditor extends JFrame
 		buttonGroup1.clearSelection();
 
 	}
-
-	private void initComponents()
-	{
-
+	private void init1(){
 		buttonGroup1 = new ButtonGroup();
 		tbDefault = new JToolBar();
 		btnWall = new JToggleButton();
@@ -55,9 +52,10 @@ public class GUIBoardEditor extends JFrame
 				editingArea.setSymbol('H');
 			}
 		});
-
 		btnOgre = new JToggleButton();
-
+	}
+	
+	private void init2(){
 		btnOgre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				editingArea.setSymbol('O');
@@ -72,10 +70,10 @@ public class GUIBoardEditor extends JFrame
 		btnKey = new JToggleButton();
 		btnKey.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				editingArea.setSymbol('k');
-			}
-		});
-
+				editingArea.setSymbol('k');	}	});
+	}
+	
+	private void init3(){
 		btnErase = new JToggleButton();
 		btnErase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -90,33 +88,28 @@ public class GUIBoardEditor extends JFrame
 		btnClear = new JMenuItem();
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				editingArea.erase();
-			}
-		});
+				editingArea.erase();	} });
+	}
+	
+	private void init4(){
 		jSeparator6 = new JPopupMenu.Separator();
 		btnValidate = new JMenuItem();
 		btnValidate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				editingArea.validateBoard();
-			}
-		});
+				editingArea.validateBoard();} 	});
 		mnHelp = new JMenu();
 		btnAbout = new JMenuItem();
-
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setTitle("Board Editor");
-
 		addWindowListener(new WindowAdapter()
-		{
-			@Override
+		{@Override
 			public void windowClosing(WindowEvent evt)
-			{
-				formWindowClosing(evt);
-			}
-		});
-
+			{formWindowClosing(evt);}});
 		tbDefault.setRollover(true);
 		btnWall.setBackground(new Color(255, 150, 100));
+	}
+	
+	private void init5(){
 		buttonGroup1.add(btnWall);
 		btnWall.setIcon(new ImageIcon(getClass().getResource("/images/wallicon.png")));
 		btnWall.setText("Wall");
@@ -132,6 +125,10 @@ public class GUIBoardEditor extends JFrame
 		btnHero.setHorizontalAlignment(SwingConstants.TRAILING);
 		btnHero.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnHero.setVerticalTextPosition(SwingConstants.BOTTOM);
+		
+	}
+	
+	private void init6(){
 		tbDefault.add(btnHero);
 		buttonGroup1.add(btnOgre);
 		btnOgre.setIcon(new ImageIcon(getClass().getResource("/images/ogreiconicon.png")));
@@ -144,12 +141,13 @@ public class GUIBoardEditor extends JFrame
 		btnGuard = new JToggleButton();
 		btnGuard.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				editingArea.setSymbol('G');
-			}
-		});
-
+				editingArea.setSymbol('G');}});
 		buttonGroup1.add(btnGuard);
 		btnGuard.setIcon(new ImageIcon(getClass().getResource("/images/guardiconicon.png")));
+		
+	}
+	
+	private void init7(){
 		btnGuard.setText("Guard");
 		btnGuard.setFocusable(false);
 		btnGuard.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -165,6 +163,10 @@ public class GUIBoardEditor extends JFrame
 		btnDoor.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnDoor.setVerticalTextPosition(SwingConstants.BOTTOM);
 		tbDefault.add(btnDoor);
+		
+	}
+	
+	private void init8(){
 		buttonGroup1.add(btnKey);
 		btnKey.setIcon(new ImageIcon(getClass().getResource("/images/keyicon.png")));
 		btnKey.setText("Key");
@@ -180,31 +182,31 @@ public class GUIBoardEditor extends JFrame
 		btnErase.setHorizontalAlignment(SwingConstants.TRAILING);
 		btnErase.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnErase.setVerticalTextPosition(SwingConstants.BOTTOM);
+		
+	}
+	
+	private void init9(){
 		tbDefault.add(btnErase);
-
 		getContentPane().add(tbDefault, BorderLayout.PAGE_START);
-
-		JToggleButton btnLevel = new JToggleButton();
+		 btnLevel = new JToggleButton();
 		btnLevel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if( editingArea.getBoardLevel()==1)
-				{
+				if( editingArea.getBoardLevel()==1){
 					editingArea.setBoardLevel(2);
 					btnLevel.setIcon(new ImageIcon(getClass().getResource("/images/2.png")));
 					btnGuard.setEnabled(false);
 					btnOgre.setEnabled(true);
-					btnLevel.setSelected(false);
-				}
+					btnLevel.setSelected(false);}
 				else{
 					editingArea.setBoardLevel(1);
 					btnLevel.setIcon(new ImageIcon(getClass().getResource("/images/1.png")));
 					btnGuard.setEnabled(true);
 					btnOgre.setEnabled(false);
-					btnLevel.setSelected(false);
-				}
-			}
-		});
-
+					btnLevel.setSelected(false);}}});
+		
+	}
+	
+	private void init10(){
 		btnLevel.setIcon(new ImageIcon(getClass().getResource("/images/1.png")));
 		btnLevel.setText("Editing Level");
 		btnLevel.setFocusable(false);
@@ -212,98 +214,92 @@ public class GUIBoardEditor extends JFrame
 		btnLevel.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnLevel.setVerticalTextPosition(SwingConstants.BOTTOM);
 		tbDefault.add(btnLevel);
-
 		editingArea.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		editingArea.setMinimumSize(new Dimension(64, 64));
 		editingArea.setPreferredSize(new Dimension(640, 480));
-
-		GroupLayout editingAreaLayout = new GroupLayout(editingArea);
+		 editingAreaLayout = new GroupLayout(editingArea);
 		editingAreaLayout.setHorizontalGroup(
 				editingAreaLayout.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 638, Short.MAX_VALUE)
 				);
+		
+	}
+	
+	private void init11(){
 		editingAreaLayout.setVerticalGroup(
-				editingAreaLayout.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 493, Short.MAX_VALUE)
-				);
-
-		editingArea.setLayout(editingAreaLayout);
-
-		pnlEditor.setViewportView(editingArea);
-		pnlEditor.getVerticalScrollBar().setUnitIncrement(24);
-		pnlEditor.getHorizontalScrollBar().setUnitIncrement(24);
-
-		getContentPane().add(pnlEditor, BorderLayout.CENTER);
-		mnEdit.setText("Edit");
-		btnClear.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
-		btnClear.setIcon(new ImageIcon(getClass().getResource("/images/clearicon.png")));
-		btnClear.setText("Clear");
-
-		mntmChangeDimensions = new JMenuItem();
+			editingAreaLayout.createParallelGroup(Alignment.LEADING)
+			.addGap(0, 493, Short.MAX_VALUE));
+	editingArea.setLayout(editingAreaLayout);
+	pnlEditor.setViewportView(editingArea);
+	pnlEditor.getVerticalScrollBar().setUnitIncrement(24);
+	pnlEditor.getHorizontalScrollBar().setUnitIncrement(24);
+	getContentPane().add(pnlEditor, BorderLayout.CENTER);
+	mnEdit.setText("Edit");
+	btnClear.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
+	btnClear.setIcon(new ImageIcon(getClass().getResource("/images/clearicon.png")));
+	btnClear.setText("Clear");
+	mntmChangeDimensions = new JMenuItem();
+	}
+	
+	private void init12(){
 		mntmChangeDimensions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				NewBoardGUI newBoardDimensions = new NewBoardGUI(GUIBoardEditor.this);
 				newBoardDimensions.setVisible(true);
-				newBoard(editorWidth, editorHeight);
-			}
-		});
-
+				newBoard(editorWidth, editorHeight);}});
 		mntmChangeDimensions.setText("Change Dimensions");
 		mnEdit.add(mntmChangeDimensions);
 		mnEdit.add(btnClear);
 		mnEdit.add(jSeparator6);
 		btnValidate.setIcon(new ImageIcon(getClass().getResource("/images/validateicon.png")));
 		btnValidate.setText("Validate");
-
 		mnEdit.add(btnValidate);
 		mbDefault.add(mnEdit);
-		mnHelp.setText("Help");
-		btnAbout.setIcon(new ImageIcon(getClass().getResource("/images/abouticon.png")));
-		btnAbout.setText("About");
-		btnAbout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				GUIAbout guiAbout = new GUIAbout(GUIBoardEditor.this);
-				guiAbout.setVisible(true);
-
-			}
-		});
-		mnHelp.add(btnAbout);
+		mntmMainMenu = new JMenuItem();
+		
+	}
+	
+	private void init13(){
+		mntmMainMenu.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			GUIMain guiMain= new GUIMain();
+			guiMain.setVisible(true);
+			dispose();}});
+	mntmMainMenu.setText("Main Menu");
+	mnEdit.add(mntmMainMenu);
+	mnHelp.setText("Help");
+	btnAbout.setIcon(new ImageIcon(getClass().getResource("/images/abouticon.png")));
+	btnAbout.setText("About");
+	btnAbout.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			GUIAbout guiAbout = new GUIAbout(GUIBoardEditor.this);
+			guiAbout.setVisible(true);}});
+	mnHelp.add(btnAbout);
+	}
+	private void init14(){
 		mbDefault.add(mnHelp);
-
 		setJMenuBar(mbDefault);
 		mnFile = new JMenu();
 		btnLoad = new JMenuItem();
 		btnLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				loadFile();
-			}
-		});
-
+				loadFile();}});
 		btnSave = new JMenuItem();
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				saveFile(false);
-			}
-		});
-
+				saveFile(false);}});
 		btnSaveAs = new JMenuItem();
 		btnSaveAs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				saveFile(true);
-			}
-		});
-
+				saveFile(true);}});
+		
+	}
+	private void init15(){
 		jSeparator2 = new JPopupMenu.Separator();
 		btnExit = new JMenuItem();
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				confirmExit();
-			}
-		});
-
-
-
+				confirmExit();}});
 		mnFile.setText("File");
 		btnLoad.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
 		btnLoad.setIcon(new ImageIcon(getClass().getResource("/images/loadicon.png")));
@@ -314,6 +310,9 @@ public class GUIBoardEditor extends JFrame
 		btnSave.setText("Save");
 		mnFile.add(btnSave);
 		btnSaveAs.setIcon(new ImageIcon(getClass().getResource("/images/saveicon.png")));
+		
+	}
+	private void init16(){
 		btnSaveAs.setText("Save As...");
 		mnFile.add(btnSaveAs);
 		mnFile.add(jSeparator2);
@@ -322,9 +321,29 @@ public class GUIBoardEditor extends JFrame
 		btnExit.setText("Exit");
 		mnFile.add(btnExit);
 		mbDefault.add(mnFile);
-
 		pack();
 		setLocationRelativeTo(null);
+	}
+	
+	
+	private void initComponents()
+	{
+		init1();
+		init2();
+		init3();
+		init4();
+		init5();
+		init6();
+		init7();
+		init8();
+		init9();
+		init10();
+		init11();
+		init12();
+		init13();
+		init14();
+		init15();
+		init16();
 	}
 
 	private boolean loadFile()
@@ -406,7 +425,7 @@ public class GUIBoardEditor extends JFrame
 
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -458,6 +477,9 @@ public class GUIBoardEditor extends JFrame
 	private JScrollPane pnlEditor;
 	private JToolBar tbDefault;
 	private JMenuItem mntmChangeDimensions;
+	private JMenuItem mntmMainMenu;
+	private JToggleButton btnLevel;
+	private GroupLayout editingAreaLayout;
 
 
 

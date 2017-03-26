@@ -401,6 +401,23 @@ public class GameEngine  implements Serializable{
 		keepSecondGame=true;
 
 	}
+
+	private void handleBoardLevel2(){
+		hero.setHeroPosition(level2HeroPosition);
+		hero.setHeroIcon('A');
+		key= new Key(level2KeyPosition);
+		key.placeKey(board);
+		board.placeSymbol(hero.getX(),hero.getY(),hero.getHeroIcon() );
+		for (Ogre ogreIt : ogres) {
+			board.placeSymbol(ogreIt.getX(),ogreIt.getY(), ogreIt.getOgreIcon());
+		}
+	}
+	private void setGameStates(){
+		gameOver=true;
+		playerWon=false;
+		keepSecondGame=false;
+		keepFirstGame=false;
+	}
 	/**
 	 * Game Logic caller to handle user entered movement  
 	 * @param move desired direction
@@ -412,51 +429,23 @@ public class GameEngine  implements Serializable{
 		if(keepFirstGame && board.getLevel()==1) 
 		{	hero.move(board, move);
 		messageTodisplay="you must escape from the Dungeon Keep";
-
 		guard.move(board, "");
 		if(!hero.checkSecurityDistance(board)){
-			gameOver=true;
-			playerWon=false;
-			keepSecondGame=false;
-			keepFirstGame=false;
-		}
-		if(board.getLevel()==2) // iniciar as restantes entidades antes de desenhar
-		{
-
-			hero.setHeroPosition(level2HeroPosition);
-			hero.setHeroIcon('A');
-			key= new Key(level2KeyPosition);
-			key.placeKey(board);
-			board.placeSymbol(hero.getX(),hero.getY(),hero.getHeroIcon() );
-			for (Ogre ogreIt : ogres) {
-				board.placeSymbol(ogreIt.getX(),ogreIt.getY(), ogreIt.getOgreIcon());
-			}
-
-
-			messageTodisplay="you must escape from the Dungeon Keep ";
-		}
-
-
-		}
+			setGameStates();}
+		if(board.getLevel()==2) 
+		{handleBoardLevel2();
+		messageTodisplay="you must escape from the Dungeon Keep ";}}
 		else if(keepSecondGame){
-			{
-				guard.destroyGuard();
-				//board.draw();
-				hero.move(board, move);
-				moveOgres(board,key);
-				attackNearbyOgres(board, hero.getHeroIcon());
-				if(!hero.checkSecurityDistance(board)){
-					gameOver=true;
-					playerWon=false;
-					keepSecondGame=false;
-				}
-
-			}
-		}
-
-		return messageTodisplay;
-
-	}
+			{guard.destroyGuard();
+			hero.move(board, move);
+			moveOgres(board,key);
+			attackNearbyOgres(board, hero.getHeroIcon());
+			if(!hero.checkSecurityDistance(board)){
+				gameOver=true;
+				playerWon=false;
+				keepSecondGame=false;
+			}}}
+		return messageTodisplay;}
 	/**
 	 * writes game state to an output stream
 	 * @param aOutputStream objectOutputStream to write to
@@ -464,8 +453,8 @@ public class GameEngine  implements Serializable{
 	 */
 	public static void write(ObjectOutputStream oout) throws IOException
 	{
-		
-/*
+
+		/*
 		oout.writeObject(board);
 		oout.writeObject(hero);
 		oout.writeObject(key);
@@ -482,7 +471,7 @@ public class GameEngine  implements Serializable{
 		{
 			oout.writeObject(ogre);
 		}
-*/
+		 */
 	}
 	/**
 	 * reads the game state from an input stream
@@ -552,8 +541,8 @@ System.out.println("2");
 			System.out.println("1");
 			ogres.add(new Ogre ((Point)oin.readObject()));
 		}
-		
-		
+
+
 	}*/
 }
 
