@@ -139,27 +139,20 @@ public class Hero extends Entity implements Serializable{
 	 * @param board
 	 */
 	private void changeEscapeSymbol(Board board ){
-		for( int l=0; l<board.getHeight(); l++)
-		{
+		for( int l=0; l<board.getHeight(); l++){
 			if(board.symbolAt(0, l)=='I') 
-				board.placeSymbol(0,l,'S');
-		}
-		for( int m=0; m<board.getHeight(); m++)
-		{ 
+				board.placeSymbol(0,l,'S');}
+		
+		for( int m=0; m<board.getHeight(); m++){ 
 			if(board.symbolAt(board.getHeight()-1, m)=='I') 
-				board.placeSymbol(board.getHeight()-1,m,'S');
-		}
-		for( int n=0; n<board.getWidth(); n++)
-		{
+				board.placeSymbol(board.getHeight()-1,m,'S');}
+		for( int n=0; n<board.getWidth(); n++){
 			if(board.symbolAt(n,0)=='I') 
-				board.placeSymbol(n,0,'S');
-		}
-		for( int o=0; o<board.getWidth(); o++)
-		{
+				board.placeSymbol(n,0,'S');}
+		
+		for( int o=0; o<board.getWidth(); o++){
 			if(board.symbolAt(o, board.getWidth()-1)=='I') 
-				board.placeSymbol(o,board.getWidth()-1,'S');
-		}
-	}
-
+				board.placeSymbol(o,board.getWidth()-1,'S');}}
+	
 }
 

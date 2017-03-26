@@ -187,8 +187,7 @@ public class GUIBoardEditor extends JFrame
 	
 	private void init9(){
 		tbDefault.add(btnErase);
-		getContentPane().add(tbDefault, BorderLayout.PAGE_START);
-		 btnLevel = new JToggleButton();
+		getContentPane().add(tbDefault, BorderLayout.PAGE_START); btnLevel = new JToggleButton();
 		btnLevel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if( editingArea.getBoardLevel()==1){
@@ -197,12 +196,12 @@ public class GUIBoardEditor extends JFrame
 					btnGuard.setEnabled(false);
 					btnOgre.setEnabled(true);
 					btnLevel.setSelected(false);}
-				else{
-					editingArea.setBoardLevel(1);
+				else{editingArea.setBoardLevel(1);
 					btnLevel.setIcon(new ImageIcon(getClass().getResource("/images/1.png")));
 					btnGuard.setEnabled(true);
-					btnOgre.setEnabled(false);
-					btnLevel.setSelected(false);}}});
+					btnOgre.setEnabled(false);btnLevel.setSelected(false);}}});
+					
+					
 		
 	}
 	

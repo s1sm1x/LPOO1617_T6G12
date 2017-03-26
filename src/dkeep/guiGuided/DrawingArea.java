@@ -33,7 +33,7 @@ public class DrawingArea extends JPanel
 	private BufferedImage heroDead;
 	private BufferedImage ogreKeyIcon;
 	private BufferedImage cross;
-	
+
 	private BufferedImage resizedHeroIcon;
 	private BufferedImage resizedHeroArmed;
 	private BufferedImage resizedGuardIcon;
@@ -50,7 +50,7 @@ public class DrawingArea extends JPanel
 	private BufferedImage resizedheroDead;
 	private BufferedImage resizedCross;
 	private BufferedImage resizedogreKeyIcon;
-	
+
 	protected Guard editorGuard;
 	protected Board board;
 	protected int boardWidth;
@@ -140,33 +140,36 @@ public class DrawingArea extends JPanel
 		board.setMatrix(newMatrix,2);
 		repaint();
 	}
+	private void initializeSprites1() throws IOException{
+		heroIcon = ImageIO.read(this.getClass().getResource("/images/heroicon.png"));
+		heroArmed = ImageIO.read(this.getClass().getResource("/images/heroiconArmed.png"));
+		guardIcon = ImageIO.read(this.getClass().getResource("/images/guardicon.png"));
+		guardSleeping = ImageIO.read(this.getClass().getResource("/images/guardiconSleeping.png"));
+		ogreIcon= ImageIO.read(this.getClass().getResource("/images/ogreicon.png"));
+		massiveClub = ImageIO.read(this.getClass().getResource("/images/massiveclub.png"));
+		StunnedOgre = ImageIO.read(this.getClass().getResource("/images/stunnedogre.png"));
+		key = ImageIO.read(this.getClass().getResource("/images/key.png"));
+	}
+	private void initializeSprites2() throws IOException{
+		doorOpened = ImageIO.read(this.getClass().getResource("/images/dooropened.png"));
+		doorClosed = ImageIO.read(this.getClass().getResource("/images/doorclosed.png"));
+		wall = ImageIO.read(this.getClass().getResource("/images/wall.jpg"));
+		floor = ImageIO.read(this.getClass().getResource("/images/floor.png"));
+		heroKey = ImageIO.read(this.getClass().getResource("/images/heroiconKey.png"));
+		ogreKeyIcon = ImageIO.read(this.getClass().getResource("/images/ogreKeyIcon.png"));
+		heroDead = ImageIO.read(this.getClass().getResource("/images/heroiconBleeding.png"));
+		cross = ImageIO.read(this.getClass().getResource("/images/cross.png"));
+	}
 
 	private void initializeSprites(){
 		try{
-			heroIcon = ImageIO.read(this.getClass().getResource("/images/heroicon.png"));
-			heroArmed = ImageIO.read(this.getClass().getResource("/images/heroiconArmed.png"));
-			guardIcon = ImageIO.read(this.getClass().getResource("/images/guardicon.png"));
-			guardSleeping = ImageIO.read(this.getClass().getResource("/images/guardiconSleeping.png"));
-			ogreIcon= ImageIO.read(this.getClass().getResource("/images/ogreicon.png"));
-			massiveClub = ImageIO.read(this.getClass().getResource("/images/massiveclub.png"));
-			StunnedOgre = ImageIO.read(this.getClass().getResource("/images/stunnedogre.png"));
-			key = ImageIO.read(this.getClass().getResource("/images/key.png"));
-			doorOpened = ImageIO.read(this.getClass().getResource("/images/dooropened.png"));
-			doorClosed = ImageIO.read(this.getClass().getResource("/images/doorclosed.png"));
-			wall = ImageIO.read(this.getClass().getResource("/images/wall.jpg"));
-			floor = ImageIO.read(this.getClass().getResource("/images/floor.png"));
-			heroKey = ImageIO.read(this.getClass().getResource("/images/heroiconKey.png"));
-			ogreKeyIcon = ImageIO.read(this.getClass().getResource("/images/ogreKeyIcon.png"));
-			heroDead = ImageIO.read(this.getClass().getResource("/images/heroiconBleeding.png"));
-			cross = ImageIO.read(this.getClass().getResource("/images/cross.png"));
+			initializeSprites1();
+			initializeSprites2();
 		}catch (final IOException ex){
 			GUIMain.close(ex, null);
-			}
+		}
 	}
-
-	protected final void scaleSprites(int w, int h){
-		spriteWidth = w;
-		spriteHeight = h;
+	private void scaleSprites1(int w, int h){
 		resizedHeroIcon = resizeImage(heroIcon, w, h);
 		resizedHeroArmed = resizeImage(heroArmed, w, h);
 		resizedGuardIcon = resizeImage(guardIcon, w, h);
@@ -175,6 +178,9 @@ public class DrawingArea extends JPanel
 		resizedMassiveClub = resizeImage(massiveClub, w, h);
 		resizedStunnedOgre = resizeImage(StunnedOgre, w, h);
 		resizedKey = resizeImage(key, w, h);
+	}
+
+	private void scaleSprites2(int w, int h){
 		resizedDoorOpened = resizeImage(doorOpened, w, h);
 		resizedDoorClosed = resizeImage(doorClosed, w, h);
 		resizedWall = resizeImage(wall, w, h);
@@ -183,6 +189,12 @@ public class DrawingArea extends JPanel
 		resizedogreKeyIcon = resizeImage(ogreKeyIcon, w, h);
 		resizedheroDead = resizeImage(heroDead, w, h);
 		resizedCross= resizeImage(cross, w, h);
+	}
+	protected final void scaleSprites(int w, int h){
+		spriteWidth = w;
+		spriteHeight = h;
+		scaleSprites1(spriteWidth, spriteHeight);
+		scaleSprites2(spriteWidth, spriteHeight);
 		updateWindow();
 	}
 	private void Cases(int j, int i, int x, int y){

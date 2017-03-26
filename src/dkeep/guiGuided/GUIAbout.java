@@ -27,8 +27,7 @@ public class GUIAbout extends JDialog{
 	private GridBagConstraints gbc_lblOla ;
 	private GridBagConstraints gbc_lblUpfeuppt_1;
 	private JLabel lblUpfeuppt_1;
-	private void init1(){
-		setTitle("About");
+	private void init1(){setTitle("About");
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
@@ -41,11 +40,8 @@ public class GUIAbout extends JDialog{
 		gbc_lblDungeonKeep.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDungeonKeep.gridx = 3;
 		gbc_lblDungeonKeep.gridy = 0;
-		getContentPane().add(lblDungeonKeep, gbc_lblDungeonKeep);
-		panel = new JPanel();
-		gbc_panel = new GridBagConstraints();
-		gbc_panel.insets = new Insets(0, 0, 5, 5);
-
+		getContentPane().add(lblDungeonKeep, gbc_lblDungeonKeep);panel = new JPanel();
+		gbc_panel = new GridBagConstraints();gbc_panel.insets = new Insets(0, 0, 5, 5);
 	}
 	private void init2(){
 		gbc_panel.fill = GridBagConstraints.BOTH;

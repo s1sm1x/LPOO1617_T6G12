@@ -78,45 +78,40 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 
 	private void updateFirstLevelCounters(){
 		board.setLevel(1);
-		for (int i = 0; i < boardHeight; i++)
-		{
-			for (int j = 0; j < boardWidth; j++)
-			{
-				switch (board.symbolAt(j, i))
-				{
-				case 'H':
-					++numHerosFirstLevel;
-					break;
-				case 'I':
-					++numDoorsFirstLevel;
-					break;
-				case 'k':
-					++numKeysFirstLevel;
-					break;
-				case 'G':
-					++numGuards;
-					break;}}}
+		for (int i = 0; i < boardHeight; i++){
+
+			for (int j = 0; j < boardWidth; j++){
+
+				switch (board.symbolAt(j, i)){
+
+				case 'H':++numHerosFirstLevel;break;
+
+				case 'I':	++numDoorsFirstLevel;break;
+
+				case 'k':++numKeysFirstLevel;break;
+
+				case 'G':	++numGuards;break;}}
+		}		
 	}
 	private void updateSecondLevelCounters(){
 		board.setLevel(2);
-		for (int i = 0; i < boardHeight; i++)
-		{
-			for (int j = 0; j < boardWidth; j++)
-			{
-				switch (board.symbolAt(j, i))
-				{
-				case 'H':
-					++numHerosSecondLevel;
-					break;
-				case 'O':
-					++numOgres;
-					break;
-				case 'I':
-					++numDoorsSecondLevel;
-					break;
-				case 'k':
-					++numKeysSecondLevel;
-					break;}}}
+		for (int i = 0; i < boardHeight; i++){
+
+			for (int j = 0; j < boardWidth; j++){
+
+				switch (board.symbolAt(j, i)){
+
+				case 'H':++numHerosSecondLevel;break;
+
+
+				case 'O':++numOgres;break;
+
+
+				case 'I':++numDoorsSecondLevel;break;
+
+
+				case 'k':++numKeysSecondLevel;break;}}
+		}
 	}
 	private void updateCounters()
 	{
@@ -223,22 +218,19 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 
 	private void placeGuard(int x, int y)
 	{
-		if (numGuards < maxGuards)
-		{
+		if (numGuards < maxGuards){
+		
 			if (board.symbolAt(x, y)== 'X')
-			{
+			
 				JOptionPane.showMessageDialog(getParent(), "Guards must not be placed on board borders!", "Error", JOptionPane.ERROR_MESSAGE);
-			}
-			else
-			{
+			
+			else{
+			
 				writeSymbol(x, y, 'G');
-				board.setGuardPosition( new Point (x,y));
-			}
-		}
-		else
-		{
+				board.setGuardPosition( new Point (x,y));}
+		}else
 			JOptionPane.showMessageDialog(getParent(), "Number of guards must not be greater than 1!", "Error", JOptionPane.ERROR_MESSAGE);
-		}
+		
 	}
 
 
@@ -371,23 +363,17 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	private void validateGuardPath(){
 		board.fillEmptySpaces();
 		board.setLevel(1);
-		if( board.getGuardPosition()!= null)
-		{
+		if( board.getGuardPosition()!= null){
 			Guard tempGuard= new Guard( board.getGuardPosition());
 			Direction[] guardRelativeMoves= tempGuard.getguardMoves();
-			for (int i = 0; i < guardRelativeMoves.length; i++)
-			{
+			for (int i = 0; i < guardRelativeMoves.length; i++){
 				Point relativeBoardPoint= tempGuard.directionToRelativePoint(guardRelativeMoves[i]);
 				Point absoluteBoardPoint = new Point (tempGuard.getX()+relativeBoardPoint.getX(),tempGuard.getY()+relativeBoardPoint.getY());
 				tempGuard.setPosition(absoluteBoardPoint);
-				if( board.symbolAt(absoluteBoardPoint.getX(), absoluteBoardPoint.getY())!=' ' && board.symbolAt(absoluteBoardPoint.getX(), absoluteBoardPoint.getY())!='G')
-				{
+				if( board.symbolAt(absoluteBoardPoint.getX(), absoluteBoardPoint.getY())!=' ' && board.symbolAt(absoluteBoardPoint.getX(), absoluteBoardPoint.getY())!='G'){
 					board.placeSymbol(absoluteBoardPoint.getX(), absoluteBoardPoint.getY(), 'x');
 					validationSuccessful = false;
-					guardPathValidated= false;
-				}
-			}
-		}
+					guardPathValidated= false;}}}
 	}
 	private void checkEveryThing(){
 		checkHeros();

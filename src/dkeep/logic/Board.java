@@ -17,8 +17,8 @@ public class Board implements Serializable{
 	private Point keyPositionLevel2;
 	private ArrayList<Point> ogresPositions = new ArrayList<>();
 	private Point guardPosition;
-	
-	
+
+
 	private  char[][] board= {
 			{'X','X','X','X','X','X','X','X','X','X'},
 			{'X',' ',' ',' ','I',' ','X', ' ',' ','X'},
@@ -70,11 +70,11 @@ public class Board implements Serializable{
 	 */
 	public Board(){	
 	}
-/**
- * Contructor for Board
- * @param board desired board disposal
- * @param level 
- */
+	/**
+	 * Contructor for Board
+	 * @param board desired board disposal
+	 * @param level 
+	 */
 	public Board(char[][] board , int level) {
 		switch(level){
 		case 1:
@@ -85,23 +85,23 @@ public class Board implements Serializable{
 			break;
 		}
 		this.level=level;
-		
+
 	}
-/**
- * Contrutor to set both board's height and width
- * @param x width
- * @param y height
- */
+	/**
+	 * Contrutor to set both board's height and width
+	 * @param x width
+	 * @param y height
+	 */
 	public Board(int x, int y) {
 		board = new char[x][y];
 		board2 = new char[x][y];
 	}
-/**
- * gets a two-dimensional matrix representing the board
- * @return
- */
+	/**
+	 * gets a two-dimensional matrix representing the board
+	 * @return
+	 */
 	protected char[][] getBoard(){
-		
+
 		switch (level){
 		case 1: 
 			return board;
@@ -110,10 +110,10 @@ public class Board implements Serializable{
 		}
 		return null;
 	}
-/**
- * Changes the board level
- * @param level
- */
+	/**
+	 * Changes the board level
+	 * @param level
+	 */
 	public void setLevel(int level){
 		this.level= level;
 	}
@@ -124,31 +124,24 @@ public class Board implements Serializable{
 	public int getLevel(){
 		return level;
 	}
-/**
- * board drawer on console
- */
+	/**
+	 * board drawer on console
+	 */
 	public void draw(){
 		switch (level){
-		case 1: 
-			for( int o =0; o<board.length; o++){ 
-				for( int p = 0 ; p < board[0].length ; p++){
-					System.out.print(board[o][p]);
-				}
-				System.out.println();
-			}
-			break;
-		case 2:
-			for(int o =0; o<board2.length; o++){
-				
-				for(int p = 0 ; p < board2[0].length; p++){
-					
-					System.out.print(board2[o][p]);
-					
-				}
-				
-				System.out.println();
-			}
-			break;
+		case 1: for( int o =0; o<board.length; o++){ 
+			for( int p = 0 ; p < board[0].length ; p++){
+				System.out.print(board[o][p]);}
+			System.out.println();}
+		break;
+		case 2: for(int o =0; o<board2.length; o++){
+			for(int p = 0 ; p < board2[0].length; p++){
+
+				System.out.print(board2[o][p]);}
+
+			System.out.println();
+		}
+		break;
 		}
 	}
 	/**
@@ -175,40 +168,36 @@ public class Board implements Serializable{
 		}
 		return 'n';
 	}
-/**
- *  replaces the symbol at x and y with the given symbol
- * @param x xAxis coordinate
- * @param y yAxis coordinate
- * @param s symbol to place
- * @return return true if it places the symbol, otherwise false
- */
+	/**
+	 *  replaces the symbol at x and y with the given symbol
+	 * @param x xAxis coordinate
+	 * @param y yAxis coordinate
+	 * @param s symbol to place
+	 * @return return true if it places the symbol, otherwise false
+	 */
 	public boolean placeSymbol(int x, int y, char s){
+
+		switch (level){
 		
-		switch (level)
-		{
 		case 1:
-			if (x >= 0 && x < board.length && y >= 0 && y < board[0].length)
-			{
+			if (x >= 0 && x < board.length && y >= 0 && y < board[0].length){
 				board[y][x] = s;
-				return true;
-			}
-			break;
+				return true;}break;
+			
 		case 2:
-			if (x >= 0 && x < board2.length && y >= 0 && y < board2[0].length)
-			{
+			if (x >= 0 && x < board2.length && y >= 0 && y < board2[0].length){
 				board2[y][x] = s; 
-				return true;
-			}
-			break;
+				return true;}break;
+			
 		}
 		return false;
 	}
-/**
- * getter for board height
- * @return board height
- */
+	/**
+	 * getter for board height
+	 * @return board height
+	 */
 	public final int getHeight(){
-		
+
 		switch (level)
 		{
 		case 1:
@@ -289,9 +278,9 @@ public class Board implements Serializable{
 		this.ogresPositions.remove(ogrePosition);
 		System.out.println("removi ogre de: "+ ogrePosition);
 	}
-	
+
 	public void fillEmptySpaces() {		
-		
+
 		for( int o =0; o<board.length; o++){ 
 			for( int p = 0 ; p < board[0].length ; p++){
 				if((board[o][p] != 'X') && (board[o][p] != 'k') && (board[o][p] != 'G')&& (board[o][p] != 'H')&& (board[o][p] != 'I'))

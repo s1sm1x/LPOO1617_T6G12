@@ -386,22 +386,18 @@ private void actionListeners5(){
 		fileChooser.setFileFilter(new FileNameExtensionFilter("Dungeon Keep saved games (*.state)", "state"));
 
 		if (fileChooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION)
-		{
+		
 			return;
-		}
-
-		try
-		{
+		try{
+		
 			fout = new FileOutputStream(fileChooser.getSelectedFile() + ".state");
 			oout = new ObjectOutputStream(fout);
 			oout.writeObject(gameEngine);
 			oout.close();
-			fout.close();
-		}
-		catch (final IOException ex)
-		{
-			GUIMain.warning(ex, this);
-		}
+			fout.close();}
+		
+		catch (final IOException ex){
+			GUIMain.warning(ex, this);}
 	}
 	private void resumeGame(){
 
