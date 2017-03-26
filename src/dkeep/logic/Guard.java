@@ -141,7 +141,7 @@ public class Guard extends Entity  implements Serializable{
 	 * @param unused
 	 * @throws Throwable
 	 */
-	public void move(Board board, String unused) throws Throwable{
+	public void move(Board board, String unused) {
 		if( board.getLevel() ==1 ){
 			switch (guardType) {
 			case "Rookie":  
@@ -211,8 +211,9 @@ public class Guard extends Entity  implements Serializable{
 	}
 	/**
 	 * guard moves getter
-	 *
+	 ** @return guard moves array
 	 */
+	
 	public Direction[]  getguardMoves(){
 		return guardMoves;
 	}
@@ -230,7 +231,7 @@ public class Guard extends Entity  implements Serializable{
 	public void setstate(String state){
 		patrol = state;
 	}
-	public ArrayList<Point> checkGuardFreePath(Board board) {
+	/*public ArrayList<Point> checkGuardFreePath(Board board) {
 		ArrayList<Point> wrongPoints = new ArrayList<Point>();
 		for( int i=0 ; i<guardMoves.length; i++ )
 		{
@@ -246,7 +247,7 @@ public class Guard extends Entity  implements Serializable{
 		return wrongPoints;
 	}
 
-	/*public ArrayList<Point> checkGuardFreePath(Board board) {
+	public ArrayList<Point> checkGuardFreePath(Board board) {
 		System.out.println("aqui");
 		int currentLevel= board.getLevel();
 		System.out.println("aqui2");

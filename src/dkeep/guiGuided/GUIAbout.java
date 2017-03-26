@@ -13,11 +13,7 @@ import java.awt.Insets;
 import java.awt.Font;
 
 import javax.swing.JPanel;
-//import javax.swing.JButton;
-//import java.awt.event.ActionListener;
-//import java.awt.event.ActionEvent;
-//import javax.swing.GroupLayout;
-//import javax.swing.GroupLayout.Alignment;
+
 
 public class GUIAbout extends JDialog{
 

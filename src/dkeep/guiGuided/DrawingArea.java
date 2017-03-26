@@ -167,7 +167,7 @@ public class DrawingArea extends JPanel
 		}
 		catch (final IOException ex)
 		{
-			GUIBoardEditor.abort(ex, null);
+			GUIMain.close(ex, null);
 		}
 	}
 
@@ -271,5 +271,25 @@ public class DrawingArea extends JPanel
 		Toolkit.getDefaultToolkit().sync();
 		g.drawImage(graphics2d, 0, 0, null);
 	}
+
+	public void fillEmptySpaces() {
+		board.fillEmptySpaces();
+		
+	}
+	/*
+	 * protected void erase()
+	{
+		final char[][] newMatrix = new char[boardHeight][boardWidth];
+
+		for (final char[] row : newMatrix)
+		{
+			Arrays.fill(row, ' ');
+		}
+
+		board.setMatrix(newMatrix,1);
+		board.setMatrix(newMatrix,2);
+		repaint();
+	}
+	 */
 	
 }
