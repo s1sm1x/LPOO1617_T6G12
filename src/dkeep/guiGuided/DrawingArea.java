@@ -141,13 +141,8 @@ public class DrawingArea extends JPanel
 		repaint();
 	}
 
-	private void initializeSprites()
-	{
-		try
-		{
-			//heroicon = ImageIO.read(this.getClass().getResource("/JAVA_LPOO_Project1/src/dkeep.images/heroicon.png"));
-			//guardicon = ImageIO.read(this.getClass().getResource("/JAVA_LPOO_Project1/src/dkeep.images/guardicon.png"));
-			//ogreicon = ImageIO.read(this.getClass().getResource("/JAVA_LPOO_Project1/src/dkeep.images/ogreicon.png"));
+	private void initializeSprites(){
+		try{
 			heroIcon = ImageIO.read(this.getClass().getResource("/images/heroicon.png"));
 			heroArmed = ImageIO.read(this.getClass().getResource("/images/heroiconArmed.png"));
 			guardIcon = ImageIO.read(this.getClass().getResource("/images/guardicon.png"));
@@ -164,18 +159,14 @@ public class DrawingArea extends JPanel
 			ogreKeyIcon = ImageIO.read(this.getClass().getResource("/images/ogreKeyIcon.png"));
 			heroDead = ImageIO.read(this.getClass().getResource("/images/heroiconBleeding.png"));
 			cross = ImageIO.read(this.getClass().getResource("/images/cross.png"));
-		}
-		catch (final IOException ex)
-		{
+		}catch (final IOException ex){
 			GUIMain.close(ex, null);
-		}
+			}
 	}
 
-	protected final void scaleSprites(int w, int h)
-	{
+	protected final void scaleSprites(int w, int h){
 		spriteWidth = w;
 		spriteHeight = h;
-
 		resizedHeroIcon = resizeImage(heroIcon, w, h);
 		resizedHeroArmed = resizeImage(heroArmed, w, h);
 		resizedGuardIcon = resizeImage(guardIcon, w, h);
@@ -194,72 +185,38 @@ public class DrawingArea extends JPanel
 		resizedCross= resizeImage(cross, w, h);
 		updateWindow();
 	}
-
-	
+	private void Cases(int j, int i, int x, int y){
+		switch (board.symbolAt(j, i)){
+		case 'H': graphicsBuffer.drawImage(resizedHeroIcon, x, y, null); break;			
+		case 'K': graphicsBuffer.drawImage(resizedheroKey, x, y, null); break;	
+		case 'A': graphicsBuffer.drawImage(resizedHeroArmed, x, y, null); break;
+		case 'G':graphicsBuffer.drawImage(resizedGuardIcon, x, y, null); break;
+		case 'g': graphicsBuffer.drawImage(resizedGuardSleeping, x, y, null); break;	
+		case 'O': graphicsBuffer.drawImage(resizedOgreIcon, x, y, null); break;	
+		case '8': graphicsBuffer.drawImage(resizedStunnedOgre, x, y, null); break;
+		case '*':graphicsBuffer.drawImage(resizedMassiveClub, x, y, null);break;	
+		case 'k': graphicsBuffer.drawImage(resizedKey, x, y, null);break;
+		case 'I': graphicsBuffer.drawImage(resizedDoorClosed, x, y, null); break;
+		case 'S': graphicsBuffer.drawImage(resizedDoorOpened, x, y, null); break;
+		case 'X': graphicsBuffer.drawImage(resizedWall, x, y, null); break;
+		case '$': graphicsBuffer.drawImage(resizedogreKeyIcon, x, y, null); break;
+		case 'd': graphicsBuffer.drawImage(resizedheroDead, x, y, null); break;
+		case 'x': graphicsBuffer.drawImage(resizedCross, x, y, null);break;
+		}
+	}
 	@Override
-	public final void paintComponent(Graphics g)
-	{
+	public final void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(0, 0, getSize().width, getSize().height);
 		int y = 0;
-		for (int i = 0; i < boardHeight; i++)
-		{
+		for (int i = 0; i < boardHeight; i++){	
 			int x = 0;
-			for (int j = 0; j < boardWidth; j++)
-			{
+			for (int j = 0; j < boardWidth; j++){
 				graphicsBuffer.drawImage(resizedFloor, x, y, null);
-
-				switch (board.symbolAt(j, i))
-				{
-				case 'H':
-					graphicsBuffer.drawImage(resizedHeroIcon, x, y, null);
-					break;
-				case 'K':
-					graphicsBuffer.drawImage(resizedheroKey, x, y, null);
-					break;
-				case 'A':
-					graphicsBuffer.drawImage(resizedHeroArmed, x, y, null);
-					break;
-				case 'G':
-					graphicsBuffer.drawImage(resizedGuardIcon, x, y, null);
-					break;
-				case 'g':
-					graphicsBuffer.drawImage(resizedGuardSleeping, x, y, null);
-					break;
-				case 'O':
-					graphicsBuffer.drawImage(resizedOgreIcon, x, y, null);
-					break;
-				case '8': 
-					graphicsBuffer.drawImage(resizedStunnedOgre, x, y, null);
-					break;
-				case '*':
-					graphicsBuffer.drawImage(resizedMassiveClub, x, y, null);
-					break;
-				case 'k':
-					graphicsBuffer.drawImage(resizedKey, x, y, null);
-					break;
-				case 'I':
-					graphicsBuffer.drawImage(resizedDoorClosed, x, y, null);
-					break;
-				case 'S':
-					graphicsBuffer.drawImage(resizedDoorOpened, x, y, null);
-					break;
-				case 'X':
-					graphicsBuffer.drawImage(resizedWall, x, y, null);
-					break;
-				case '$':
-					graphicsBuffer.drawImage(resizedogreKeyIcon, x, y, null);
-					break;
-				case 'd':
-					graphicsBuffer.drawImage(resizedheroDead, x, y, null);
-					break;
-				case 'x':
-					graphicsBuffer.drawImage(resizedCross, x, y, null);
-					break;
-				}
+				Cases(j,i,x,y);
 				x += spriteWidth;
-			}
+			} 
 			y += spriteHeight;
 		}
 		Toolkit.getDefaultToolkit().sync();
@@ -267,9 +224,6 @@ public class DrawingArea extends JPanel
 	}
 
 	public void fillEmptySpaces() {
-		board.fillEmptySpaces();
-		
-	}
-	
-	
+		board.fillEmptySpaces();	
+	}	
 }
