@@ -156,38 +156,21 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	private void placeDoor(int x, int y)
 	{
 		boolean placementAllowed= false;
-		switch(board.getLevel())
-		{
-		case 1:
-			placementAllowed= (numDoorsFirstLevel< maxDoors);
-			break;
-		case 2:
-			placementAllowed= (numDoorsSecondLevel< maxDoors);
-			break;
-		}
+		switch(board.getLevel()){
+		case 1:placementAllowed= (numDoorsFirstLevel< maxDoors);break;
+		case 2:placementAllowed= (numDoorsSecondLevel< maxDoors);break;}
 
-		if ( placementAllowed )
-		{
-			if (board.symbolAt(x, y)== 'X')
-			{
+		if ( placementAllowed ){
+			if (board.symbolAt(x, y)== 'X')	{
 				if (board.isCorner(x, y))
-				{
 					JOptionPane.showMessageDialog(getParent(), "Doors must not be placed in corners!", "Error", JOptionPane.ERROR_MESSAGE);
-				}
 				else
-				{
-					writeSymbol(x, y, 'I');
-				}
-			}
+					writeSymbol(x, y, 'I');}
 			else
-			{
-				JOptionPane.showMessageDialog(getParent(), "Doors must be placed on board borders!", "Error", JOptionPane.ERROR_MESSAGE);
-			}
-		}
+				JOptionPane.showMessageDialog(getParent(), "Doors must be placed on board borders!", "Error", JOptionPane.ERROR_MESSAGE);}
 		else
-		{
 			JOptionPane.showMessageDialog(getParent(), "Number of doors must not be greater than 1.", "Error", JOptionPane.ERROR_MESSAGE);
-		}
+
 	}
 
 	private void placeOgre(int x, int y)
@@ -214,42 +197,28 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	private void placeHero(int x, int y)
 	{
 		boolean placementAllowed= false;
-		switch(board.getLevel())
-		{
-		case 1:
-			placementAllowed= (numHerosFirstLevel < maxHeros);
-			break;
-		case 2:
-			placementAllowed= (numHerosSecondLevel < maxHeros);
-			break;
-		}
+		switch(board.getLevel()){
+		case 1:placementAllowed= (numHerosFirstLevel < maxHeros);break;
+		case 2:placementAllowed= (numHerosSecondLevel < maxHeros);break;}
 
-		if ( placementAllowed )
-		{
+
+		if ( placementAllowed ){
+
 			if (board.symbolAt(x, y)== 'X')
-			{
+
 				JOptionPane.showMessageDialog(getParent(), "Hero must not be placed on board borders!", "Error", JOptionPane.ERROR_MESSAGE);
-			}
-			else
-			{
+
+			else{
+
 				writeSymbol(x, y, 'H');
-				switch(board.getLevel())
-				{
-				case 1 :
-					board.setHeroPositionLevel1(new Point(x,y));
-					break;
-				case 2:
-					board.setHeroPositionLevel2(new Point(x,y));
-					break;
-				}
+				switch(board.getLevel()){
 
-
-			}
-		}
+				case 1 :board.setHeroPositionLevel1(new Point(x,y));break;
+				case 2:board.setHeroPositionLevel2(new Point(x,y));break;
+				}}}
 		else
-		{
+
 			JOptionPane.showMessageDialog(getParent(), "Number of heros must not be greater than 1!", "Error", JOptionPane.ERROR_MESSAGE);
-		}
 	}
 
 	private void placeGuard(int x, int y)
@@ -276,39 +245,29 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 	private void placeKey(int x, int y)
 	{
 		boolean placementAllowed= false;
-		switch(board.getLevel())
-		{
-		case 1:
-			placementAllowed= (numKeysFirstLevel <  maxKeys);
-			break;
-		case 2:
-			placementAllowed= (numKeysSecondLevel <  maxKeys);
-			break;
-		}
-		if ( placementAllowed )
-		{
+		switch(board.getLevel()){
+
+		case 1:placementAllowed= (numKeysFirstLevel <  maxKeys);break;
+
+		case 2:placementAllowed= (numKeysSecondLevel <  maxKeys);break;}
+		if ( placementAllowed ){
+
 			if (board.symbolAt(x, y)== 'X')
-			{
+
 				JOptionPane.showMessageDialog(getParent(), "Keys must not be placed on board borders!", "Error", JOptionPane.ERROR_MESSAGE);
-			}
-			else
-			{
+
+			else{
+
 				writeSymbol(x, y, 'k');
-				switch(board.getLevel())
-				{
-				case 1:
-					board.setKeyPositionLevel1(new Point(x,y));
-					break;
-				case 2:
-					board.setKeyPositionLevel2(new Point(x,y));
-					break;				
-				}
-			}
-		}
+				switch(board.getLevel()){
+
+				case 1:board.setKeyPositionLevel1(new Point(x,y));break;					
+				case 2:board.setKeyPositionLevel2(new Point(x,y));break;				
+				}}}
+
 		else
-		{
+
 			JOptionPane.showMessageDialog(getParent(), "Number of keys must not be greater than 1!", "Error", JOptionPane.ERROR_MESSAGE);
-		}
 	}
 
 	private void placeWall(int x, int y)
@@ -337,52 +296,41 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 
 	protected void placeSymbol(int x, int y, char s)
 	{
-		if (x < 0 || x >= boardWidth || y < 0 || y >= boardHeight)
-		{
-			return;
-		}
-
-		if (board.symbolAt(x, y) == s)
+		if (x < 0 || x >= boardWidth || y < 0 || y >= boardHeight || board.symbolAt(x, y) == s)
 		{
 			return;
 		}
 
 		updateCounters();
-
+		switchPlaceSymbol(x, y, s);
+	}
+	private void switchPlaceSymbol(int x, int y, char s){
 		switch (s)
 		{
-		case 'H':
-			placeHero(x, y);
-			break;
-		case 'O':
-			placeOgre(x, y);
-			board.draw();
-			break;
-		case 'X':
-			placeWall(x, y);
-			break;
-		case ' ':
-			placeBlank(x, y);
-			break;
-		case 'I':
-			placeDoor(x, y);
-			break;
-		case 'G':
-			placeGuard(x, y);
-			break;
-		case 'k':
-			placeKey(x, y);
-			break;
+		case 'H':	placeHero(x, y);break;
+
+		case 'O':	placeOgre(x, y);break;
+
+		case 'X':placeWall(x, y);break;
+
+		case ' ':placeBlank(x, y);break;
+
+		case 'I':placeDoor(x, y);break;
+
+		case 'G':placeGuard(x, y);break;
+
+		case 'k':placeKey(x, y);break;
+
 		}
 	}
 	private String dialogMessage = "";
 	boolean validationSuccessful = true;
 	private void checkHeros(){
 		if (numHerosFirstLevel < 1 || numHerosSecondLevel < 1)
-			{
+		{
 			dialogMessage += "You must place the hero first in both levels.\n";
 			validationSuccessful = false;
-			}
+		}
 	}
 	private void checkDoors(){
 		if (numDoorsFirstLevel < 1  || numDoorsSecondLevel < 1)
@@ -458,9 +406,9 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 		{JOptionPane.showMessageDialog(getParent(), "Board validated successfully!", "Validation results", JOptionPane.INFORMATION_MESSAGE);}
 		else
 		{if(!guardPathValidated){
-				dialogMessage += "Guard path must be empty and not to go outside board boundaries.\n"; 
-				repaint();}
-			JOptionPane.showMessageDialog(getParent(), dialogMessage, "Validation results", JOptionPane.ERROR_MESSAGE);}
+			dialogMessage += "Guard path must be empty and not to go outside board boundaries.\n"; 
+			repaint();}
+		JOptionPane.showMessageDialog(getParent(), dialogMessage, "Validation results", JOptionPane.ERROR_MESSAGE);}
 		return validationSuccessful;
 	}
 
@@ -585,7 +533,7 @@ public class EditingArea extends DrawingArea implements MouseListener, MouseMoti
 			}
 		}
 	}
-	*/
+	 */
 
 
 

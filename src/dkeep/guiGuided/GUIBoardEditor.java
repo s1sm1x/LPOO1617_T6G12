@@ -353,20 +353,17 @@ public class GUIBoardEditor extends JFrame
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileFilter(new FileNameExtensionFilter("Maze Run maze files (*.board)", "board"));
 
-		if (fileChooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION)
-		{
-			return false;
-		}
+		if (fileChooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION){
+		return false;}
+		
 
 		buffer = fileChooser.getSelectedFile();
 
 		if (buffer == null)
-		{
-			return false;
-		}
-
-		try
-		{
+		return false;
+			
+		try{
+		
 			fin = new FileInputStream(buffer);
 			oin = new ObjectInputStream(fin);
 			setTitle("Board Builder - " + buffer.getAbsolutePath());
@@ -376,11 +373,9 @@ public class GUIBoardEditor extends JFrame
 			fin.close();
 			oin.close();
 		}
-		catch (IOException | ClassNotFoundException ex)
-		{
+		catch (IOException | ClassNotFoundException ex){
 			GUIMain.close(ex, this);
 		}
-
 		return true;
 	}
 
@@ -388,44 +383,30 @@ public class GUIBoardEditor extends JFrame
 
 	private boolean saveFile(boolean overwrite)
 	{
-		if(editingArea.validateBoard())
-		{
+		if(editingArea.validateBoard()){
 			editingArea.fillEmptySpaces();
 			FileOutputStream fout;
 			ObjectOutputStream oout;
 
-			if (buffer == null || overwrite)
-			{
+			if (buffer == null || overwrite){
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setFileFilter(new FileNameExtensionFilter(" Board  files (*.)", "board"));
 
 				if (fileChooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION)
-				{
 					return false;
-				}
-
+	
 				buffer = new File(fileChooser.getSelectedFile() + ".board");
-				setTitle(" Builder - " + buffer.getAbsolutePath());
-			}
+				setTitle(" Builder - " + buffer.getAbsolutePath());}
 
-			try
-			{
+			try{
 				fout = new FileOutputStream(buffer);
 				oout = new ObjectOutputStream(fout);
 				editingArea.writeBoard(oout);
-
 				fout.close();
-				oout.close();
-
-			}
-			catch (IOException ex)
-			{
-				GUIMain.close(ex, this);
-			}
-
-			return true;
-		}
-
+				oout.close();}
+			catch (IOException ex){
+				GUIMain.close(ex, this);}
+			return true;}
 		return false;
 	}
 
