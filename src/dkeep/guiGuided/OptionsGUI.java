@@ -1,8 +1,5 @@
 package dkeep.guiGuided;
-
-import java.awt.EventQueue;
 import java.awt.Toolkit;
-
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -12,8 +9,6 @@ import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class OptionsGUI extends JFrame {
 
@@ -47,7 +42,7 @@ public class OptionsGUI extends JFrame {
 					Toolkit.getDefaultToolkit().beep();
 					e.consume();}  }  });	
 	}
-	
+
 	private void init2(){
 		textField_Ogres.setBounds(153, 44, 116, 22);
 		getContentPane().add(textField_Ogres);
@@ -77,9 +72,7 @@ public class OptionsGUI extends JFrame {
 	private void initialize() {
 		init1();
 		init2();
-		 returnListener();
-		
-
+		returnListener();
 	}
 
 	public void setvisible(boolean b) {
