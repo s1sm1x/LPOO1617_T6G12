@@ -3,12 +3,10 @@ package dkeep.guiGuided;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import dkeep.logic.Board;
-import dkeep.logic.Direction;
 import dkeep.logic.Guard;
 
 public class DrawingArea extends JPanel
@@ -21,19 +19,16 @@ public class DrawingArea extends JPanel
 	private BufferedImage guardSleeping;
 	private BufferedImage ogreIcon;
 	private BufferedImage massiveClub;
-	private BufferedImage multipleOgres;
 	private BufferedImage StunnedOgre;
 	private BufferedImage key;
 	private BufferedImage doorOpened;
 	private BufferedImage doorClosed;
-	private BufferedImage grid;
 	private BufferedImage wall;
 	private BufferedImage floor;
 	private BufferedImage heroKey;
 	private BufferedImage heroDead;
 	private BufferedImage ogreKeyIcon;
 	private BufferedImage cross;
-
 	private BufferedImage resizedHeroIcon;
 	private BufferedImage resizedHeroArmed;
 	private BufferedImage resizedGuardIcon;
@@ -58,7 +53,6 @@ public class DrawingArea extends JPanel
 	protected int boardCells;
 	protected int spriteWidth;
 	protected int spriteHeight;
-
 	private BufferedImage graphics2d;
 	private Graphics graphicsBuffer;
 	private Dimension windowSize;

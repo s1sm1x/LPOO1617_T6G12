@@ -3,12 +3,7 @@ package dkeep.guiGuided;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
 import dkeep.cli.DungeonKeepCLI;
-
-//import java.io.*;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 
 public class GUIMain extends JFrame
@@ -72,7 +67,7 @@ public class GUIMain extends JFrame
 		btnEditor.setText("Board Editor");
 		btnEditor.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		btnEditor.setFocusable(false);
-		
+
 	}
 	private void setLayout2(){
 		btnQuit.setText("Quit");
@@ -89,17 +84,16 @@ public class GUIMain extends JFrame
 		getContentPane().add(lblimage);
 		getContentPane().add(lblTitle);
 		getContentPane().add(btnEditor);
-		//pack();
 		setLocationRelativeTo(null);
 	}
-	
+
 	private void initComponents() 
 	{
 		setInitialFeatures();
-		 buttonListeners();
-		 setLayout1();
-		 setLayout2();
-			
+		buttonListeners();
+		setLayout1();
+		setLayout2();
+
 	}
 
 	public static void main(String args[])

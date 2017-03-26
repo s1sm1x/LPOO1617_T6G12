@@ -1,8 +1,6 @@
 package dkeep.logic;
 
-import java.awt.Component;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Guard extends Entity  implements Serializable{
@@ -79,7 +77,7 @@ public class Guard extends Entity  implements Serializable{
 		return guardType;
 	}
 	/**
-	 * Guard movement directon reverser
+	 * Guard movement direction reverser
 	 * @param direction
 	 * @return reversed direction
 	 */
@@ -99,6 +97,8 @@ public class Guard extends Entity  implements Serializable{
 
 		case RIGHT:
 			dir=Direction.LEFT;
+			break;
+		case NONE:
 			break;
 		}
 		return dir;
@@ -201,8 +201,8 @@ public class Guard extends Entity  implements Serializable{
 			sleeping=true;
 		}
 	}
-	
-	
+
+
 	/**guard extended check position, not needed due to guard's fixed moves
 	 * 
 	 */
@@ -221,7 +221,7 @@ public class Guard extends Entity  implements Serializable{
 	 * guard moves getter
 	 ** @return guard moves array
 	 */
-	
+
 	public Direction[]  getguardMoves(){
 		return guardMoves;
 	}
@@ -239,48 +239,6 @@ public class Guard extends Entity  implements Serializable{
 	public void setstate(String state){
 		patrol = state;
 	}
-	/*public ArrayList<Point> checkGuardFreePath(Board board) {
-		ArrayList<Point> wrongPoints = new ArrayList<Point>();
-		for( int i=0 ; i<guardMoves.length; i++ )
-		{
-			Point relativepoint =directionToRelativePoint(guardMoves[i]);
-			Point absolutePoint= new Point(pos.getX()+relativepoint.getX(), pos.getY()+relativepoint.getY());
-			if(board.symbolAt(absolutePoint.getX(), absolutePoint.getY())!='n' && board.symbolAt(absolutePoint.getX(), absolutePoint.getY()) == ' '){
-				wrongPoints.add(new Point(absolutePoint.getX(),absolutePoint.getY()));
-				pos.setX(absolutePoint.getX());
-				pos.setY(absolutePoint.getY());
-				System.out.println(i);
-			}
-		}
-		return wrongPoints;
-	}
 
-	public ArrayList<Point> checkGuardFreePath(Board board) {
-		System.out.println("aqui");
-		int currentLevel= board.getLevel();
-		System.out.println("aqui2");
-		board.setLevel(1);
-		System.out.println("aqui3");
-		ArrayList<Point> wrongPoints = new ArrayList<Point>();
-		System.out.println("aqui4");
-		for( int i=0 ; i<guardMoves.length; i++ )
-		{
-			System.out.println("aqui5");
-			System.out.println("iteração numero: "+i);
-			Point relativepoint =directionToRelativePoint(guardMoves[i]);
-			Point absolutePoint= new Point(pos.getX()+relativepoint.getX(), pos.getY()+relativepoint.getY());
-			pos.setX(absolutePoint.getX());
-			pos.setY(absolutePoint.getY());
-			if( board.symbolAt(pos.getX(), pos.getY())!=' ')
-				{
-				System.out.println("aqui6");
-				wrongPoints.add(pos);
-				System.out.println("Encontro em: "+pos);
-				}
-		}
-		board.setLevel(currentLevel);
-
-		return wrongPoints;
-	}*/
 }
 

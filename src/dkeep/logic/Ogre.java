@@ -87,13 +87,17 @@ public class Ogre extends Entity implements Serializable{
  * ogre's massive club mover
  * @param board
  */
-	private void moveMassiveClub( Board board){
+	private void moveMassiveClub( Board board, char heroIcon, Point keyPosition){
 		Direction validClubMove = randomMovement(board);
 		Point relativepoint =directionToRelativePoint(validClubMove);
 		Point absolutePoint= new Point(pos.getX()+relativepoint.getX(), pos.getY()+relativepoint.getY());
 		if(!(massiveClub.getX() == pos.getX() && massiveClub.getY() == pos.getY()) )
 			board.placeSymbol(massiveClub.getX(), massiveClub.getY(), ' '); 
+		if( board.symbolAt(keyPosition.getX(),keyPosition.getY() )==' ' && heroIcon !='K')
+			board.placeSymbol(massiveClub.getX(), massiveClub.getY(), 'k'); 
 		board.placeSymbol(absolutePoint.getX(), absolutePoint.getY(), '*');
+		
+		
 		massiveClub.pos.setX(absolutePoint.getX());
 		massiveClub.pos.setY(absolutePoint.getY());
 	}
@@ -103,7 +107,7 @@ public class Ogre extends Entity implements Serializable{
  * @param direction desired direction
  * @param keyPosition key current position
  */
-	public void move(Board board, String direction, Point keyPosition){
+	public void move(Board board, String direction, Point keyPosition, char heroIcon){
 		if( roundsStunnedCounter==0){
 			Direction validMove = randomMovement(board);
 			Point relativepoint =directionToRelativePoint(validMove);
@@ -130,7 +134,8 @@ public class Ogre extends Entity implements Serializable{
 			if (roundsStunnedCounter == 0)
 				ogreIcon='O';
 		}
-		moveMassiveClub(board);
+		moveMassiveClub(board, heroIcon, keyPosition);
+		
 	}
 /**
  * ogre further position to move checker
@@ -158,11 +163,11 @@ public class Ogre extends Entity implements Serializable{
  * @param board
  * @param point desired point to move
  */
-	public void setOgrePosition(Board board,Point point) {
+	public void setOgrePosition(Board board,Point point, char heroIcon, Point keyPosition) {
 		board.placeSymbol(pos.getX(), pos.getY(),' ');
 		pos.setX(point.getX());
 		pos.setY(point.getY());
 		board.placeSymbol(pos.getX(), pos.getY(),ogreIcon);
-		moveMassiveClub(board);
+		moveMassiveClub(board, heroIcon, keyPosition);
 	}
 }

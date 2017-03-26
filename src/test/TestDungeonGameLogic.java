@@ -6,8 +6,6 @@ import org.junit.Test;
 import dkeep.logic.Board;
 import dkeep.logic.Direction;
 import dkeep.logic.GameEngine;
-import dkeep.logic.Guard;
-import dkeep.logic.Hero;
 import dkeep.logic.Point;
 
 import static org.junit.Assert.*;
@@ -30,7 +28,7 @@ public class TestDungeonGameLogic {
 			{ 'X', 'O', ' ', ' ', 'X' },
 			{ 'X', 'X', 'X', 'X', 'X' }
 		};
-/**/
+
 	@Test
 	public void testMoveHeroIntoAFreeCell() {
 		Board board= new Board(b1);
@@ -49,14 +47,13 @@ public class TestDungeonGameLogic {
 	}
 	
 	@Test
-	public void testHeroIsCapturedByGuard(){// teste forcado, nao? é suposto chamar as funcoes independentemente ??
+	public void testHeroIsCapturedByGuard(){
 		Board board= new Board(b1);
 		GameEngine gameEngine= new GameEngine(board); 
-		System.out.println(gameEngine.getGameOver());
-		assertEquals(true, gameEngine.getGameOver());
+		assertEquals(true, GameEngine.getGameOver());
 		gameEngine.moveHero(board, Direction.RIGHT);
-		assertTrue(gameEngine.getGameOver());
-		assertFalse(gameEngine.getPlayerWon()); 
+		assertTrue(GameEngine.getGameOver());
+		assertFalse(GameEngine.getPlayerWon()); 
 	}
 	
 	@Test
@@ -71,7 +68,7 @@ public class TestDungeonGameLogic {
 	}
 	
 	@Test
-	public void guardMovesToKeyAndOpensDoor(){
+	public void heroMovesToKeyAndOpensDoor(){
 		Board board= new Board(b1);
 		GameEngine gameEngine= new GameEngine(board);
 		assertNotEquals(gameEngine.getSymbolAt(board,0,2),'S');
@@ -86,7 +83,7 @@ public class TestDungeonGameLogic {
 	}
 	
 	@Test
-	public void guardMovesToDoorAndGoesToNextLevel(){
+	public void heroMovesToDoorAndGoesToNextLevel(){
 		Board board= new Board(b1);
 		GameEngine gameEngine= new GameEngine(board);
 		gameEngine.moveHero(board, Direction.DOWN);
@@ -95,21 +92,20 @@ public class TestDungeonGameLogic {
 		assertEquals(gameEngine.getBoardLevel(board),2);
 		assertNotEquals(gameEngine.getHeroPosition(),new Point(0,3));
 	}
-	/**/
+
 	@Test
 	public void heroMovesNearOgreAndGameEnds(){
+
 		Board board= new Board(b2);
 		GameEngine gameEngine= new GameEngine(board);
 		gameEngine.setBoardLevel(board, 2);
 		assertEquals(2,gameEngine.getBoardLevel(board));
-		/*board.placeSymbol(hero.getX(),hero.getY(),hero.getHeroIcon() );
-		board.placeSymbol(testOgre.getX(),testOgre.getY(),testOgre.getOgreIcon() );*/
 		assertEquals(2,gameEngine.getBoardLevel(board));
 		assertEquals(new Point(1,1),gameEngine.getHeroPosition());
 		assertEquals(new Point(1,3),gameEngine.getOgrePosition());
 		gameEngine.moveHero(board, Direction.DOWN);
-		assertTrue(gameEngine.getGameOver());
-		assertFalse(gameEngine.getPlayerWon());
+		assertTrue(GameEngine.getGameOver());
+		assertFalse(GameEngine.getPlayerWon());
 	}
 	@Test
 	public void heroMovesToExitDoorAndNearOgreAndGameEnds(){
@@ -120,7 +116,7 @@ public class TestDungeonGameLogic {
 		gameEngine.moveHero(board, Direction.RIGHT);
 		assertEquals('K',gameEngine.getHeroIcon());
 	}
-	
+
 	@Test
 	public void heroMovesToExitDoorWithoutKeyAndFails(){
 		Board board= new Board(b2);
@@ -130,7 +126,7 @@ public class TestDungeonGameLogic {
 		assertEquals(new Point(1,1),gameEngine.getHeroPosition());
 		assertNotEquals(gameEngine.getSymbolAt(board,0,1),'S');
 	}
-	
+
 	/*
 	 * 
 	 * final char[][] b2 =
@@ -158,7 +154,7 @@ public class TestDungeonGameLogic {
 	}
 	@Test
 	public void heroMovesWithKeyDoorOpensAndWinsTheGame(){
-		Board board= new Board(b2,2);//indicar que é o do segundo nível
+		Board board= new Board(b2,2);
 		GameEngine gameEngine= new GameEngine(board);
 		gameEngine.setBoardLevel(board, 2);
 		
@@ -169,8 +165,8 @@ public class TestDungeonGameLogic {
 		gameEngine.moveHero(board, Direction.LEFT);
 		gameEngine.moveHero(board, Direction.LEFT);
 		gameEngine.moveHero(board, Direction.LEFT);
-		assertTrue(gameEngine.getGameOver());
-		assertTrue(gameEngine.getPlayerWon());
+		assertTrue(GameEngine.getGameOver());
+		assertTrue(GameEngine.getPlayerWon());
 		//board.draw();
 	}
 	@Test(timeout=1000)
@@ -178,19 +174,15 @@ public class TestDungeonGameLogic {
 		Board board= new Board(b2,2);//indicar que é o do segundo nível
 		GameEngine gameEngine= new GameEngine(board);
 		gameEngine.setBoardLevel(board, 2);
-		gameEngine.setOgrePosition(board, new Point(1,3));
+		gameEngine.setOgrePosition(board, new Point(1,3), gameEngine.getHeroIcon(), gameEngine.getKeyPosition());
 		gameEngine.moveOgres(board,gameEngine.getKey());
-		
-		//boolean conditions= (gameEngine.getSymbolAt(board,2,3)== 'O' || gameEngine.getSymbolAt(board,1,4)== 'O' );
-		//boolean conditionsOgre1= (gameEngine.getOgrePosition().equals( new Point(2,3)) );
-		//boolean conditionsOgre2= (gameEngine.getOgrePosition().equals(new Point(1,2)));
 		boolean ogreGoesUp =false;
 		boolean ogreGoesDown= false;
 		boolean ogreGoesLeft=false;
 		boolean ogreGoesRight=false;
 		while(!ogreGoesUp || !ogreGoesDown || !ogreGoesLeft || !ogreGoesRight )
 		{
-			gameEngine.setOgrePosition(board, new Point(2,2));
+			gameEngine.setOgrePosition(board, new Point(2,2), gameEngine.getHeroIcon(), gameEngine.getKeyPosition());
 			gameEngine.moveOgres(board,gameEngine.getKey());
 			if (gameEngine.getOgrePosition().equals(new Point(1,2))){
 				ogreGoesLeft=true;
@@ -207,17 +199,15 @@ public class TestDungeonGameLogic {
 			else
 				fail("unexpected movement");
 		}
-		// test to massive Club
+	
 		boolean massiveGoesRight=false; 
 		boolean massiveGoesLeft=false;
 		boolean massiveGoesUp= false;
 		boolean massiveGoesDown= false;
 		while(!massiveGoesRight || !massiveGoesLeft || !massiveGoesUp || !massiveGoesDown )
 		{
-			gameEngine.setOgrePosition(board, new Point(2,2));
-			//gameEngine.moveOgres(board,gameEngine.getKey());
-			//System.out.println("aqui interessa: ponto "+gameEngine.getMassiveClubPosition());
-			//board.draw();
+			gameEngine.setOgrePosition(board, new Point(2,2), gameEngine.getHeroIcon(), gameEngine.getKeyPosition());
+		
 			
 			if (gameEngine.getMassiveClubPosition().equals(new Point(1,2))){
 				massiveGoesLeft=true;
@@ -240,12 +230,10 @@ public class TestDungeonGameLogic {
 	@Test 
 	public void testOgreChangesIconWhenHeroGetsNearby(){
 		
-			Board board= new Board(b2,2);//indicar que é o do segundo nível
+			Board board= new Board(b2,2);
 			GameEngine gameEngine= new GameEngine(board);
 			gameEngine.setBoardLevel(board, 2);
-			//board.draw();
 			assertEquals('O', gameEngine.getOgreIcon());
-		
 			gameEngine.moveHero(board, Direction.DOWN);
 			gameEngine.attackNearbyOgres(board,gameEngine.getHeroIcon());
 			assertEquals('8', gameEngine.getOgreIcon());
@@ -258,7 +246,7 @@ public class TestDungeonGameLogic {
 		O.setY(2);
 		assertEquals("Point [x=2, y=2]",O+"");
 	}
-	//testes guarda
+	
 	@Test
 	public void testRookiemoves() throws Throwable{
 		Direction[] guardMoves= {Direction.DOWN,Direction.DOWN,Direction.UP,Direction.UP};
@@ -314,7 +302,6 @@ public class TestDungeonGameLogic {
 		gameEngine.setPatrolDirection('B');
 		gameEngine.moveGuard(board,"");
 		assertEquals(new Point(3,3),gameEngine.getGuardPosition());
-		//System.out.println(gameEngine.getGuardPosition().getX()+" "+ gameEngine.getGuardPosition().getY());
 	}
 	@Test
 	public void testConvertToReverseMove() {

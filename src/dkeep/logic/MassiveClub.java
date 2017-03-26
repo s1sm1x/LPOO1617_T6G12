@@ -60,16 +60,4 @@ public class MassiveClub  implements Serializable{
 	}
 
 
-	/**
-
-	 * @param board
-	 * @param pointToPlace
-	 * @param ownerOgrePosition
-	 */
-	/*protected void move(Board board, Point pointToPlace, Point ownerOgrePosition) {
-		// TODO Auto-generated method stub
-		// esta deve ser uma posição relativa ao ogre, Dizer direcção nao pode porque nao se move relativo à sua, mas à do ogre
-		
-	}*/
-
 }

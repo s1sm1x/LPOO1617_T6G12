@@ -2,16 +2,11 @@ package dkeep.guiGuided;
 
 import java.awt.*;
 import java.awt.event.*;
-//import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import dkeep.logic.Board;
-//import lpoo.gui.GUIGlobals;
-import dkeep.logic.Ogre;
-import dkeep.logic.Point;
 
 
 import javax.swing.GroupLayout.Alignment;
@@ -54,7 +49,7 @@ public class GUIBoardEditor extends JFrame
 		});
 		btnOgre = new JToggleButton();
 	}
-	
+
 	private void init2(){
 		btnOgre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -72,7 +67,7 @@ public class GUIBoardEditor extends JFrame
 			public void actionPerformed(ActionEvent e) {
 				editingArea.setSymbol('k');	}	});
 	}
-	
+
 	private void init3(){
 		btnErase = new JToggleButton();
 		btnErase.addActionListener(new ActionListener() {
@@ -90,7 +85,7 @@ public class GUIBoardEditor extends JFrame
 			public void actionPerformed(ActionEvent e) {
 				editingArea.erase();	} });
 	}
-	
+
 	private void init4(){
 		jSeparator6 = new JPopupMenu.Separator();
 		btnValidate = new JMenuItem();
@@ -104,11 +99,11 @@ public class GUIBoardEditor extends JFrame
 		addWindowListener(new WindowAdapter()
 		{@Override
 			public void windowClosing(WindowEvent evt)
-			{formWindowClosing(evt);}});
+		{formWindowClosing(evt);}});
 		tbDefault.setRollover(true);
 		btnWall.setBackground(new Color(255, 150, 100));
 	}
-	
+
 	private void init5(){
 		buttonGroup1.add(btnWall);
 		btnWall.setIcon(new ImageIcon(getClass().getResource("/images/wallicon.png")));
@@ -125,9 +120,9 @@ public class GUIBoardEditor extends JFrame
 		btnHero.setHorizontalAlignment(SwingConstants.TRAILING);
 		btnHero.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnHero.setVerticalTextPosition(SwingConstants.BOTTOM);
-		
+
 	}
-	
+
 	private void init6(){
 		tbDefault.add(btnHero);
 		buttonGroup1.add(btnOgre);
@@ -144,9 +139,9 @@ public class GUIBoardEditor extends JFrame
 				editingArea.setSymbol('G');}});
 		buttonGroup1.add(btnGuard);
 		btnGuard.setIcon(new ImageIcon(getClass().getResource("/images/guardiconicon.png")));
-		
+
 	}
-	
+
 	private void init7(){
 		btnGuard.setText("Guard");
 		btnGuard.setFocusable(false);
@@ -163,9 +158,9 @@ public class GUIBoardEditor extends JFrame
 		btnDoor.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnDoor.setVerticalTextPosition(SwingConstants.BOTTOM);
 		tbDefault.add(btnDoor);
-		
+
 	}
-	
+
 	private void init8(){
 		buttonGroup1.add(btnKey);
 		btnKey.setIcon(new ImageIcon(getClass().getResource("/images/keyicon.png")));
@@ -182,9 +177,9 @@ public class GUIBoardEditor extends JFrame
 		btnErase.setHorizontalAlignment(SwingConstants.TRAILING);
 		btnErase.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnErase.setVerticalTextPosition(SwingConstants.BOTTOM);
-		
+
 	}
-	
+
 	private void init9(){
 		tbDefault.add(btnErase);
 		getContentPane().add(tbDefault, BorderLayout.PAGE_START); btnLevel = new JToggleButton();
@@ -197,14 +192,14 @@ public class GUIBoardEditor extends JFrame
 					btnOgre.setEnabled(true);
 					btnLevel.setSelected(false);}
 				else{editingArea.setBoardLevel(1);
-					btnLevel.setIcon(new ImageIcon(getClass().getResource("/images/1.png")));
-					btnGuard.setEnabled(true);
-					btnOgre.setEnabled(false);btnLevel.setSelected(false);}}});
-					
-					
-		
+				btnLevel.setIcon(new ImageIcon(getClass().getResource("/images/1.png")));
+				btnGuard.setEnabled(true);
+				btnOgre.setEnabled(false);btnLevel.setSelected(false);}}});
+
+
+
 	}
-	
+
 	private void init10(){
 		btnLevel.setIcon(new ImageIcon(getClass().getResource("/images/1.png")));
 		btnLevel.setText("Editing Level");
@@ -216,30 +211,30 @@ public class GUIBoardEditor extends JFrame
 		editingArea.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		editingArea.setMinimumSize(new Dimension(64, 64));
 		editingArea.setPreferredSize(new Dimension(640, 480));
-		 editingAreaLayout = new GroupLayout(editingArea);
+		editingAreaLayout = new GroupLayout(editingArea);
 		editingAreaLayout.setHorizontalGroup(
 				editingAreaLayout.createParallelGroup(Alignment.LEADING)
 				.addGap(0, 638, Short.MAX_VALUE)
 				);
-		
+
 	}
-	
+
 	private void init11(){
 		editingAreaLayout.setVerticalGroup(
-			editingAreaLayout.createParallelGroup(Alignment.LEADING)
-			.addGap(0, 493, Short.MAX_VALUE));
-	editingArea.setLayout(editingAreaLayout);
-	pnlEditor.setViewportView(editingArea);
-	pnlEditor.getVerticalScrollBar().setUnitIncrement(24);
-	pnlEditor.getHorizontalScrollBar().setUnitIncrement(24);
-	getContentPane().add(pnlEditor, BorderLayout.CENTER);
-	mnEdit.setText("Edit");
-	btnClear.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
-	btnClear.setIcon(new ImageIcon(getClass().getResource("/images/clearicon.png")));
-	btnClear.setText("Clear");
-	mntmChangeDimensions = new JMenuItem();
+				editingAreaLayout.createParallelGroup(Alignment.LEADING)
+				.addGap(0, 493, Short.MAX_VALUE));
+		editingArea.setLayout(editingAreaLayout);
+		pnlEditor.setViewportView(editingArea);
+		pnlEditor.getVerticalScrollBar().setUnitIncrement(24);
+		pnlEditor.getHorizontalScrollBar().setUnitIncrement(24);
+		getContentPane().add(pnlEditor, BorderLayout.CENTER);
+		mnEdit.setText("Edit");
+		btnClear.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
+		btnClear.setIcon(new ImageIcon(getClass().getResource("/images/clearicon.png")));
+		btnClear.setText("Clear");
+		mntmChangeDimensions = new JMenuItem();
 	}
-	
+
 	private void init12(){
 		mntmChangeDimensions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -255,25 +250,25 @@ public class GUIBoardEditor extends JFrame
 		mnEdit.add(btnValidate);
 		mbDefault.add(mnEdit);
 		mntmMainMenu = new JMenuItem();
-		
+
 	}
-	
+
 	private void init13(){
 		mntmMainMenu.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent arg0) {
-			GUIMain guiMain= new GUIMain();
-			guiMain.setVisible(true);
-			dispose();}});
-	mntmMainMenu.setText("Main Menu");
-	mnEdit.add(mntmMainMenu);
-	mnHelp.setText("Help");
-	btnAbout.setIcon(new ImageIcon(getClass().getResource("/images/abouticon.png")));
-	btnAbout.setText("About");
-	btnAbout.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			GUIAbout guiAbout = new GUIAbout(GUIBoardEditor.this);
-			guiAbout.setVisible(true);}});
-	mnHelp.add(btnAbout);
+			public void actionPerformed(ActionEvent arg0) {
+				GUIMain guiMain= new GUIMain();
+				guiMain.setVisible(true);
+				dispose();}});
+		mntmMainMenu.setText("Main Menu");
+		mnEdit.add(mntmMainMenu);
+		mnHelp.setText("Help");
+		btnAbout.setIcon(new ImageIcon(getClass().getResource("/images/abouticon.png")));
+		btnAbout.setText("About");
+		btnAbout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GUIAbout guiAbout = new GUIAbout(GUIBoardEditor.this);
+				guiAbout.setVisible(true);}});
+		mnHelp.add(btnAbout);
 	}
 	private void init14(){
 		mbDefault.add(mnHelp);
@@ -291,7 +286,7 @@ public class GUIBoardEditor extends JFrame
 		btnSaveAs.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				saveFile(true);}});
-		
+
 	}
 	private void init15(){
 		jSeparator2 = new JPopupMenu.Separator();
@@ -309,7 +304,7 @@ public class GUIBoardEditor extends JFrame
 		btnSave.setText("Save");
 		mnFile.add(btnSave);
 		btnSaveAs.setIcon(new ImageIcon(getClass().getResource("/images/saveicon.png")));
-		
+
 	}
 	private void init16(){
 		btnSaveAs.setText("Save As...");
@@ -323,8 +318,8 @@ public class GUIBoardEditor extends JFrame
 		pack();
 		setLocationRelativeTo(null);
 	}
-	
-	
+
+
 	private void initComponents()
 	{
 		init1();
@@ -353,16 +348,16 @@ public class GUIBoardEditor extends JFrame
 		fileChooser.setFileFilter(new FileNameExtensionFilter("Maze Run maze files (*.board)", "board"));
 
 		if (fileChooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION){
-		return false;}
-		
+			return false;}
+
 
 		buffer = fileChooser.getSelectedFile();
 
 		if (buffer == null)
-		return false;
-			
+			return false;
+
 		try{
-		
+
 			fin = new FileInputStream(buffer);
 			oin = new ObjectInputStream(fin);
 			setTitle("Board Builder - " + buffer.getAbsolutePath());
@@ -393,7 +388,7 @@ public class GUIBoardEditor extends JFrame
 
 				if (fileChooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION)
 					return false;
-	
+
 				buffer = new File(fileChooser.getSelectedFile() + ".board");
 				setTitle(" Builder - " + buffer.getAbsolutePath());}
 
