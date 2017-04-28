@@ -11,7 +11,7 @@ ______________________________________________________
   #Package and class diagram (UML)
   
 ![UMLDiagram](https://github.com/s1sm1x/LPOO1617_T6G12/blob/LPOO_finalProject_T6G12/JAVA_LPOO_Project1/bin/images/UMLDiagram.png)
-![App](https://github.com/s1sm1x/LPOO1617_T6G12/blob/LPOO_finalProject_T6G12/JAVA_LPOO_Project1/bin/GUI_mock-ups.bmpr)
+
 
       
       
@@ -19,10 +19,11 @@ ______________________________________________________
  Singleton - para única coneção a base de dados
  Outros a implementar em processos finais de análise de código
  
+ #GUI_mock-ups
+ 
  
  
  #GUI Design
- 
  Funcionalidades GUI:
  NetWorking:
  -HTTP GET(requisição e atualização da UI)
@@ -38,7 +39,6 @@ ______________________________________________________
  -deteção de desconeção e consequente reconexão
  
  #Test Design
- 
  NetWorking:
  -Simulação das respostas dos pedidos GET e POST (testando as secções de código de envio, receção e processamento separadamente)
  
