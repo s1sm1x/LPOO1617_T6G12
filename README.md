@@ -20,7 +20,9 @@ ______________________________________________________
  Outros a implementar em processos finais de análise de código
  
  #GUI_mock-ups
- 
+![Screen1](https://github.com/s1sm1x/LPOO1617_T6G12/blob/LPOO_finalProject_T6G12/JAVA_LPOO_Project1/bin/images/screen1.PNG)
+![Screen2](https://github.com/s1sm1x/LPOO1617_T6G12/blob/LPOO_finalProject_T6G12/JAVA_LPOO_Project1/bin/images/screen2.PNG)
+![Screen3](https://github.com/s1sm1x/LPOO1617_T6G12/blob/LPOO_finalProject_T6G12/JAVA_LPOO_Project1/bin/images/screen3.PNG)
  
  
  #GUI Design
