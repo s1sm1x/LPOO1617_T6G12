@@ -7,8 +7,18 @@ Pedro Filipe Marques de Oliveira up201507152, up201507152@fe.up.pt
 
 ______________________________________________________
                 FINAL PROJECT 
-        
-        
+                
+  #Package and class diagram (UML)
+  
+      
+      
+      
+ #Design Patterns
+ Singleton - para única coneção a base de dados
+ Outros a implementar em processos finais de análise de código
+ 
+ 
+ 
  #GUI Design
  
  Funcionalidades GUI:
