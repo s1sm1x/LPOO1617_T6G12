@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_my_settings"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.arduinosensors.MySettingsActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+
+    <TextView
+        android:id="@+id/tvID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvDebug"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
+        android:text="ID Actual"
+        android:textColor="?android:attr/textColorTertiary"
+        android:textSize="14sp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/tvDebug"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="21dp"
+        android:layout_marginStart="18dp"
+        android:text="TextView"
+        android:visibility="invisible" />
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+
+        android:layout_marginTop="27dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout">
+
+            <TextView
+                android:id="@+id/tvAddRoom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/tvDeleteRoom"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:text="Add Room to monitorize: "
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/edAddRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/btnOkAddRoom"
+                android:layout_alignBottom="@+id/btnOkAddRoom"
+                android:layout_toStartOf="@+id/btnOkAddRoom"
+                android:descendantFocusability="beforeDescendants"
+                android:ems="10"
+                android:focusableInTouchMode="true"
+                android:hint="número"
+                android:inputType="number"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btnOkAddRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/tvAddRoom"
+                android:text="Add Room" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="272dp"
+            android:layout_alignParentStart="true"
+
+            android:layout_marginTop="27dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/tvDeleteRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="38dp"
+                android:text="Delete Monitorizing Room: "
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
+
+            <ListView
+                android:id="@+id/evRooms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:title="Real Time Bluetooth"
+        android:id="@+id/btnMenuBluetooth"
+        android:icon="@drawable/alert_icon"
+        android:orderInCategory="100"
+        /><!-- android:showAsAction="always"-->
+</menu>

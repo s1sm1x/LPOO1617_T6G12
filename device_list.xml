@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/title_paired_devices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#666"
+        android:paddingLeft="5dp"
+        android:text="Select your bluetooth device:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#fff"
+        android:visibility="gone" />
+    <ListView android:id="@+id/paired_devices"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:stackFromBottom="false" />
+
+    <TextView
+        android:id="@+id/connecting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/warningSignal"
+            android:layout_width="30dp"
+            android:layout_height="21dp"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            android:src="@drawable/attention" />
+
+        <TextView
+            android:id="@+id/infoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="fill_horizontal"
+            android:text="If the device you are looking for is not listed, please first pair in Android settings."
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            tools:textSize="18sp" />
+    </LinearLayout>
+
+</LinearLayout>
