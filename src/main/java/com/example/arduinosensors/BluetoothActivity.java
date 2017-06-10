@@ -61,7 +61,6 @@ public class BluetoothActivity extends Activity  {
     private final int handlerState = 0;
     private static final int handlerState1 = 1;
     private static final int handlerState2 = 2;
-    //private final int handlerState3 = 3;
     private static final int handlerState4 = 4;
     private final int handlerState5 = 5;
 
@@ -182,8 +181,6 @@ public class BluetoothActivity extends Activity  {
         });
 
         IntentFilter filter = new IntentFilter();
-        //filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
-        //filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
         filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
         this.registerReceiver(mReceiver, filter);
     }
@@ -659,7 +656,6 @@ public class BluetoothActivity extends Activity  {
                         break;
 
                     case '*':
-                        //tempTextView.setText(" aqui =" + tempPPGWaveBuffer.size() + "- " + tempSampleTime + "-" + integerbpm + "-" + compensatoryTime);
                         processGraphInformation();
                         break;
                 }
