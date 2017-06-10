@@ -142,58 +142,27 @@ public class MainActivity extends AppCompatActivity {
 
 }
 private void subOnCreate2(){
-    listview.setAdapter(adapter);
-    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    listview.setAdapter(adapter);    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
         @Override
         public void onItemClick(AdapterView<?> parent, final View view,
                                 int position, long id) {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-            alertDialogBuilder.setMessage("Solve Alert?");
-            globalPosition = position;
-            globalparent = parent;
-            alertDialogBuilder.setPositiveButton("yes",
-                    new DialogInterface.OnClickListener() {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);  alertDialogBuilder.setMessage("Solve Alert?"); globalPosition = position; globalparent = parent;
+            alertDialogBuilder.setPositiveButton("yes",new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface arg0, int arg1) {
-                            Toast.makeText(MainActivity.this, "carregou", Toast.LENGTH_SHORT).show();
-                            view.animate().setDuration(250).alpha(0)
-                                    .withEndAction(new Runnable() {
+                        public void onClick(DialogInterface arg0, int arg1) {view.animate().setDuration(250).alpha(0).withEndAction(new Runnable() {
                                         @Override
-                                        public void run() {
-                                            if (globalPosition < list.size()) { // user may press while list is updated
-                                                try {
-                                                    listview.setAdapter(adapter);
-                                                    adapter.notifyDataSetChanged();
-                                                    view.setAlpha(1);
-                                                    Log.d("CENAS", "problemas");
-                                                    PostAlert postAlert = new PostAlert(AlertOrderedInfo.get(globalPosition));
-                                                    Thread thr = new Thread(postAlert);
-                                                    thr.start();
-                                                } catch (Exception e) {
-                                                    Toast.makeText(MainActivity.this, "Error solving alert", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-
-                                        }
-                                    });
-                            Toast.makeText(MainActivity.this, "Alert solved. Information sent to database.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                                        public void run() {if (globalPosition < list.size()) { // user may press while list is updated
+                                                try {listview.setAdapter(adapter);
+                                                    adapter.notifyDataSetChanged(); view.setAlpha(1); PostAlert postAlert = new PostAlert(AlertOrderedInfo.get(globalPosition)); Thread thr = new Thread(postAlert);thr.start();
+                                                } catch (Exception e) {Toast.makeText(MainActivity.this, "Error solving alert", Toast.LENGTH_SHORT).show();} } } }); Toast.makeText(MainActivity.this, "Alert solved. Information sent to database.", Toast.LENGTH_SHORT).show(); }});
             alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(MainActivity.this, "carregou", Toast.LENGTH_SHORT).show();}}); AlertDialog alertDialog = alertDialogBuilder.create(); alertDialog.show(); }
 
-                    Toast.makeText(MainActivity.this, "carregou", Toast.LENGTH_SHORT).show();
-                }
-            });
+    });}
 
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-        }
-
-    });
-}
 
 @Override
     protected void onCreate(Bundle savedInstanceState) {
