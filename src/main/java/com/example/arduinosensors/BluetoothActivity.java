@@ -88,10 +88,7 @@ public class BluetoothActivity extends Activity  {
 
     private static boolean sound = true;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public void startVariables(){
         setContentView(R.layout.activity_bluetooth);
         tvID  = (TextView) findViewById(R.id.tvID);
         txtString = (TextView) findViewById(R.id.txtString);
@@ -107,10 +104,13 @@ public class BluetoothActivity extends Activity  {
         soundButton = (ImageButton) findViewById(R.id.soundButton);
         attentionImage = (ImageView) findViewById(R.id.attentionImage);
         attentionLabel = (TextView) findViewById(R.id.attentionLabel);
+    }
+
+    public void setVariablesDefinitions(){
         attentionLabel.setBackgroundColor(Color.DKGRAY);
         tvID.setText("Actual ID: "+ MainActivity.getAndroid_id());
         graph= new Graph(graphic);
-       graph.setInitialDefinitions();
+        graph.setInitialDefinitions();
 
         stressBar.setMax(stressMaxValue);
         stressBar.setProgress(stressMinValue);
@@ -124,67 +124,78 @@ public class BluetoothActivity extends Activity  {
         heartBeatAnim.setRepeatCount(INFINITE);
         heartBeatAnim.setRepeatMode(ObjectAnimator.RESTART);
         heartBeatAnim.start();
+    }
+
+    /**
+     * Handler to receive and process data from bluetooth device
+     */
+public void handler(){
+    bluetoothIn = new Handler() {
+        boolean tempSound = true;
 
         /**
-         * Handler to receive and process data from bluetooth device
+         * handle message received from bluetooth
+         * @param msg message received
          */
-        bluetoothIn = new Handler() {
-            boolean tempSound = true;
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case handlerState:
+                    String readMessage = (String) msg.obj;                                                                // msg.arg1 = bytes from connect thread
+                    ReceivedData.setData(readMessage);
+                    break;
 
-            /**
-             * handle message received from bluetooth
-             * @param msg message received
-             */
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    case handlerState:
-                        String readMessage = (String) msg.obj;                                                                // msg.arg1 = bytes from connect thread
-                       ReceivedData.setData(readMessage);
-                        break;
+                case handlerState1:
+                    tempSound = Boolean.parseBoolean((String) msg.obj);
+                    ReceivedData.setSound(tempSound);
+                    break;
 
-                    case handlerState1:
-                        tempSound = Boolean.parseBoolean((String) msg.obj);
-                        ReceivedData.setSound(tempSound);
-                        break;
-
-                    case handlerState5:
-                        if("ACK".equals ((String) msg.obj ))
+                case handlerState5:
+                    if("ACK".equals ((String) msg.obj ))
                         ReceivedData.clearPPGwaveBuffer();
-                        break;
-
-                }
-                    ReceivedData.Process();
-                }
-        };
-
-        btAdapter = BluetoothAdapter.getDefaultAdapter();
-        checkBTState();
-
-        /**
-         * Set up onClick listener for change from normal to mute sound
-         */
-        soundButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                sound = !sound;
-                bluetoothIn.obtainMessage(handlerState1, Boolean.toString(sound)).sendToTarget();
-                if (sound == true) {
-                    soundButton.setImageResource(R.drawable.normal_volume);
-                    soundButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    Toast.makeText(getBaseContext(), "Sound Activated", Toast.LENGTH_SHORT).show();
-                } else {
-                    soundButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    soundButton.setImageResource(R.drawable.mute_volume);
-                    Toast.makeText(getBaseContext(), "Mute", Toast.LENGTH_SHORT).show();
-                }
+                    break;
 
             }
-        });
+            ReceivedData.Process();
+        }
+    };
 
+}
+
+    /**
+     * Set up onClick listener for change from normal to mute sound
+     */
+ public void buttonListener(){
+
+     soundButton.setOnClickListener(new OnClickListener() {
+         public void onClick(View v) {
+             sound = !sound;
+             bluetoothIn.obtainMessage(handlerState1, Boolean.toString(sound)).sendToTarget();
+             if (sound == true) {
+                 soundButton.setImageResource(R.drawable.normal_volume);
+                 soundButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                 Toast.makeText(getBaseContext(), "Sound Activated", Toast.LENGTH_SHORT).show();
+             } else {
+                 soundButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                 soundButton.setImageResource(R.drawable.mute_volume);
+                 Toast.makeText(getBaseContext(), "Mute", Toast.LENGTH_SHORT).show();
+             }
+
+         }
+     });
+ }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        startVariables();
+        setVariablesDefinitions();
+        handler();
+        btAdapter = BluetoothAdapter.getDefaultAdapter();
+        checkBTState();
+        buttonListener();
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
         this.registerReceiver(mReceiver, filter);
     }
-
     /**
      * BroadcastReceiver to listen bluetooth intents
      */
