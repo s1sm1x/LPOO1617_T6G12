@@ -55,7 +55,6 @@ public class MyLoginActivityCompatible extends Activity {
         GetLogin(String user, String pass){
             this.user= user;
             this.pass= pass;
-            //tv4.setText("User "+ user + " Password: " + pass.hashCode());
         }
         @Override
         public void run() {
@@ -85,30 +84,16 @@ public class MyLoginActivityCompatible extends Activity {
                     }
 
                 } else {
-                    //createMessageAndSend("alerts", "get response error");
-                    // break;
-                    //showResult("erro");
+                    
 
                 }
 
-                //createMessageAndSend("alerts",response);
             } catch (Exception e) {
-                //createMessageAndSend("alerts", "1"+e.getMessage());
-                //showResult ( e.toString());
+                
             }finally{
                 if(urlConnection!=null)
                     urlConnection.disconnect();
-            /*if(((System.currentTimeMillis() - lastMillis> notificationTimeMillisOffset)
-                    && (MainActivity.AlertOrderedInfo.size()>0))
-                    || (MainActivity.imediateAlert)  ) {
-                pushNotification();
-                lastMillis= System.currentTimeMillis();
-                MainActivity.imediateAlert=false;
-            }*/
-                //if((MainActivity.AlertOrderedInfo.size() >(MainActivity.lastAlertOrderedInfo.size())) && (MainActivity.AlertOrderedInfo.size()>0)){
-
-
-            }
+                          }
         }
 
     }
