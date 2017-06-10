@@ -34,3 +34,5 @@ Equitativa, 50%, cada um dos elementos encarregou-se de trabalho equivalente.</b
 # Tempo em desenvolvimento
 
 +/- 70 a 90 horas cada elemento </br>
+
+[![BCH compliance](https://bettercodehub.com/edge/badge/s1sm1x/LPOO1617_T6G12?branch=master)](https://bettercodehub.com/)
