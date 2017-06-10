@@ -165,7 +165,6 @@ public void handler(){
      * Set up onClick listener for change from normal to mute sound
      */
  public void buttonListener(){
-
      soundButton.setOnClickListener(new OnClickListener() {
          public void onClick(View v) {
              sound = !sound;
@@ -178,10 +177,7 @@ public void handler(){
                  soundButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
                  soundButton.setImageResource(R.drawable.mute_volume);
                  Toast.makeText(getBaseContext(), "Mute", Toast.LENGTH_SHORT).show();
-             }
-
-         }
-     });
+             }  }   });
  }
     @Override
     public void onCreate(Bundle savedInstanceState) {
