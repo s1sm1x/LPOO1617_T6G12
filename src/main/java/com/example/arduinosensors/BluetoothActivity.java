@@ -111,15 +111,11 @@ public class BluetoothActivity extends Activity  {
         tvID.setText("Actual ID: "+ MainActivity.getAndroid_id());
         graph= new Graph(graphic);
         graph.setInitialDefinitions();
-
         stressBar.setMax(stressMaxValue);
         stressBar.setProgress(stressMinValue);
         oxygenBar.setMax(oxygenMaxValue);
         oxygenBar.setProgress(oxygenMinValue);
-
-        heartBeatAnim = ofPropertyValuesHolder(heartBeat,
-                PropertyValuesHolder.ofFloat("scaleX", beatContraction),
-                PropertyValuesHolder.ofFloat("scaleY", beatContraction));
+        heartBeatAnim = ofPropertyValuesHolder(heartBeat,PropertyValuesHolder.ofFloat("scaleX", beatContraction), PropertyValuesHolder.ofFloat("scaleY", beatContraction));
         heartBeatAnim.setDuration(beatInitialDuration);
         heartBeatAnim.setRepeatCount(INFINITE);
         heartBeatAnim.setRepeatMode(ObjectAnimator.RESTART);
@@ -179,6 +175,7 @@ public void handler(){
                  Toast.makeText(getBaseContext(), "Mute", Toast.LENGTH_SHORT).show();
              }  }   });
  }
+   
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
