@@ -132,59 +132,6 @@ public class TinyDB {
         return mFolder.getPath() + '/' + imageName;
     }
 
-    /**
-     * Saves the Bitmap as a PNG file at path 'fullPath'
-     * @param fullPath path of the image file
-     * @param bitmap the image as a Bitmap
-     * @return true if it successfully saved, false otherwise
-     */
-    private boolean saveBitmap(String fullPath, Bitmap bitmap) {
-        if (fullPath == null || bitmap == null)
-            return false;
-
-        boolean fileCreated = false;
-        boolean bitmapCompressed = false;
-        boolean streamClosed = false;
-
-        File imageFile = new File(fullPath);
-
-        if (imageFile.exists())
-            if (!imageFile.delete())
-                return false;
-
-        try {
-            fileCreated = imageFile.createNewFile();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(imageFile);
-            bitmapCompressed = bitmap.compress(CompressFormat.PNG, 100, out);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            bitmapCompressed = false;
-
-        } finally {
-            if (out != null) {
-                try {
-                    out.flush();
-                    out.close();
-                    streamClosed = true;
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    streamClosed = false;
-                }
-            }
-        }
-
-        return (fileCreated && bitmapCompressed && streamClosed);
-    }
-
     // Getters
 
     /**
