@@ -29,7 +29,7 @@ package com.example.arduinosensors;
         import java.util.Arrays;
         import java.util.Map;
 
-//import com.google.gson.Gson;
+
 
         import android.content.Context;
         import android.content.SharedPreferences;
@@ -260,32 +260,6 @@ public class TinyDB {
 
         return newList;
     }
-
-
-//    public ArrayList<Object> getListObject(String key, Class<?> mClass){
-//    	Gson gson = new Gson();
-//
-//    	ArrayList<String> objStrings = getListString(key);
-//    	ArrayList<Object> objects =  new ArrayList<Object>();
-//
-//    	for(String jObjString : objStrings){
-//    		Object value  = gson.fromJson(jObjString,  mClass);
-//    		objects.add(value);
-//    	}
-//    	return objects;
-//    }
-
-
-
-//    public  Object getObject(String key, Class<?> classOfT){
-//
-//        String json = getString(key);
-//        Object value = new Gson().fromJson(json, classOfT);
-//        if (value == null)
-//            throw new NullPointerException();
-//        return value;
-//    }
-
 
     // Put methods
 
