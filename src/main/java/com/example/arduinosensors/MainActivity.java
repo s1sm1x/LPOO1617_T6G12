@@ -119,7 +119,83 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+    private void subOnCreate1 (){
+
+    btnService.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            continueGet = true;
+            Intent i = new Intent(MainActivity.this, BackgroundService.class);
+            MainActivity.continueGet = true;
+            startService(i);
+        }
+    });
+    tinyDB = new TinyDB(getApplicationContext());
+    //ListView part
+
+    list.clear();
+    for (int i = 0; i < AlertOrderedInfo.size(); ++i) {
+        list.add("Room: " + AlertOrderedInfo.get(i).getQuarto() + "\nPaciente id: " + AlertOrderedInfo.get(i).getPaciente_ID() + "\nMachine: " + AlertOrderedInfo.get(i).getMaquina());
+    }
+    adapter = new AdapterAlertasPersonalizado(AlertOrderedInfo, this);
+
+
+}
+private void subOnCreate2(){
+    listview.setAdapter(adapter);
+    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, final View view,
+                                int position, long id) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            alertDialogBuilder.setMessage("Solve Alert?");
+            globalPosition = position;
+            globalparent = parent;
+            alertDialogBuilder.setPositiveButton("yes",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            Toast.makeText(MainActivity.this, "carregou", Toast.LENGTH_SHORT).show();
+                            view.animate().setDuration(250).alpha(0)
+                                    .withEndAction(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (globalPosition < list.size()) { // user may press while list is updated
+                                                try {
+                                                    listview.setAdapter(adapter);
+                                                    adapter.notifyDataSetChanged();
+                                                    view.setAlpha(1);
+                                                    Log.d("CENAS", "problemas");
+                                                    PostAlert postAlert = new PostAlert(AlertOrderedInfo.get(globalPosition));
+                                                    Thread thr = new Thread(postAlert);
+                                                    thr.start();
+                                                } catch (Exception e) {
+                                                    Toast.makeText(MainActivity.this, "Error solving alert", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+
+                                        }
+                                    });
+                            Toast.makeText(MainActivity.this, "Alert solved. Information sent to database.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    Toast.makeText(MainActivity.this, "carregou", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+    });
+}
+
+@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -130,71 +206,13 @@ public class MainActivity extends AppCompatActivity {
         tvID = (TextView) findViewById(R.id.tvID);
         hnd = new MyHandler();
         listview = (ListView) findViewById(R.id.lv1);
-
-        android_id = Secure.getString(getApplicationContext().getContentResolver(),
-                Secure.ANDROID_ID);
-
-        tinyDB = new TinyDB(getApplicationContext());
-        //ListView part
-
-        list.clear();
-        for (int i = 0; i < AlertOrderedInfo.size(); ++i) {
-            list.add("Room: " + AlertOrderedInfo.get(i).getQuarto() + "\nPaciente id: " + AlertOrderedInfo.get(i).getPaciente_ID() + "\nMachine: " + AlertOrderedInfo.get(i).getMaquina());
-        }
-        adapter = new AdapterAlertasPersonalizado(AlertOrderedInfo, this);
-        listview.setAdapter(adapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-                alertDialogBuilder.setMessage("Solve Alert?");
-                globalPosition = position;
-                globalparent = parent;
-                alertDialogBuilder.setPositiveButton("yes",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                Toast.makeText(MainActivity.this, "carregou", Toast.LENGTH_SHORT).show();
-                                view.animate().setDuration(250).alpha(0)
-                                        .withEndAction(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                if (globalPosition < list.size()) { // user may press while list is updated
-                                                    try {
-                                                        listview.setAdapter(adapter);
-                                                        adapter.notifyDataSetChanged();
-                                                        view.setAlpha(1);
-                                                        PostAlert postAlert = new PostAlert(AlertOrderedInfo.get(globalPosition));
-                                                        Thread thr = new Thread(postAlert);
-                                                        thr.start();
-                                                    } catch (Exception e) {
-                                                        Toast.makeText(MainActivity.this, "Error solving alert", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }
-
-                                            }
-                                        });
-                                Toast.makeText(MainActivity.this, "Alert solved. Information sent to database.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        Toast.makeText(MainActivity.this, "carregou", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-            }
-
-        });
+        android_id = Secure.getString(getApplicationContext().getContentResolver(), Secure.ANDROID_ID);
+        btnService = (Button) findViewById(R.id.btnService);
+        subOnCreate1();
+        subOnCreate2();
         updateVariablesOnBackButton();
-        startActivityForResult(new Intent(MainActivity.this, MyLoginActivityCompatible.class), 0xe111);
-    }
+        startActivityForResult(new Intent(MainActivity.this, myLoginActivity.class), 0xe111);}
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
