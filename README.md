@@ -9,6 +9,7 @@ Game Loop-> Control thread speed with sleep (Control of run velocity);</br>
 Observer -> listview array changed notifier
 
 # Major difficulties along the way
+
 O desenvolvimento Android tem algumas particularidades, pois o mesmo componente visual pode ser programado quer por JAVA (adicionando-o ao criar a atividade) ou pode ser feito de forma permanente se programado diretamente em xml. Outra particularidade relaciona-se com as permissões que são necessárias para a aplicação que se está a desenvolver. Todos os componentes como web, bluetooth, som ou vibração precisam de permissões individuais que devem ser acordadas pelo utilizador para que a aplicação possa aceder a esses recursos (hardware ou software) do Smartphone.</br>
 Ainda outra particularidade do Android é o particionamento da informação em resources, quer sejam objetos de um menu, um layout, os temas, os estilos, as cores, strings fixas. Todas estas e componentes derivadas, com boas práticas, devem ser declaradas em ficheiros xml à parte e guardados em pastas organizadas por tópico já declarados à criação do projeto.</br>
 Uma outra questão que teve de ser tida em conta foi o facto do Android não permitir que certos processos corram na Thread de interface com o utilizador por se tratarem de "blocking calls" e poderem tornar a tela irresponsiva, como tal, os pedidos GET e POST, bem como Bluetooth devem ser feitos em threads separadas da "Main Thread" e contatar com ela por meio de Handlers. Classe criada especificamente com este propósito.</br>
@@ -35,4 +36,8 @@ Equitativa, 50%, cada um dos elementos encarregou-se de trabalho equivalente.</b
 
 +/- 70 a 90 horas cada elemento </br>
 
+# Anexos
+
 [![BCH compliance](https://bettercodehub.com/edge/badge/s1sm1x/LPOO1617_T6G12?branch=master)](https://bettercodehub.com/)
+
+![Screenshot](UML.png)
