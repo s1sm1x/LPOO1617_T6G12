@@ -1,7 +1,7 @@
 # LPOO1617_T6G12
 Projecto 1 - Diogo Costa (up201507146) e Pedro Oliveira (up201507152)
 # Design Patterns
-Holder -> Listview scroll performance, recycling views that disappear from the UI;
+Holder -> Listview scroll performance, recycling views that disappear from the UI;</br>
 Factory -> Intent to initiate other activities;
 Composite -> View; 
 Double Buffer-> Intermediate Object between display and data (performance increase);
