@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
         btnPOST = (Button) findViewById(R.id.buttonPOST);
         tvID = (TextView) findViewById(R.id.tvID);
         hnd = new MyHandler();
-        //btnBlutoothActivity = (Button) findViewById(R.id.btnBlutoothActivity);
         listview = (ListView) findViewById(R.id.lv1);
 
         android_id = Secure.getString(getApplicationContext().getContentResolver(),
@@ -158,18 +157,15 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
                                 Toast.makeText(MainActivity.this, "carregou", Toast.LENGTH_SHORT).show();
-                                //final String item = (String) globalparent.getItemAtPosition(globalPosition);
                                 view.animate().setDuration(250).alpha(0)
                                         .withEndAction(new Runnable() {
                                             @Override
                                             public void run() {
                                                 if (globalPosition < list.size()) { // user may press while list is updated
                                                     try {
-                                                        //list.remove(item);
                                                         listview.setAdapter(adapter);
                                                         adapter.notifyDataSetChanged();
                                                         view.setAlpha(1);
-                                                        Log.d("CENAS", "problemas");
                                                         PostAlert postAlert = new PostAlert(AlertOrderedInfo.get(globalPosition));
                                                         Thread thr = new Thread(postAlert);
                                                         thr.start();
@@ -230,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                 roomSplitter = response.split(";");
                 for (int roomIndex = 1; roomIndex < roomSplitter.length; roomIndex += 2) {
                     currentQuarto = roomSplitter[roomIndex];
-                    parts = roomSplitter[roomIndex + 1].trim().split("!");//split(" ");
+                    parts = roomSplitter[roomIndex + 1].trim().split("!");
                     for (int i = 0; i < parts.length; ++i) {
                         if (!quartoToSearchAndAlerts.contains(currentQuarto))
                             quartoToSearchAndAlerts.add(currentQuarto);
