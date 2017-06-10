@@ -133,7 +133,6 @@ public class BackgroundService extends Service{
     private void createMessageAndSend(String key, String response){
     Message msg = MainActivity.hnd.obtainMessage();
     Bundle bnd = new Bundle();
-    // bnd.putInt("count", a++);
     bnd.putString(key,response);
     msg.setData(bnd);
     MainActivity.hnd.sendMessage(msg);
