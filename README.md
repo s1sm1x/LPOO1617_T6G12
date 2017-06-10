@@ -2,11 +2,11 @@
 Projecto 1 - Diogo Costa (up201507146) e Pedro Oliveira (up201507152)
 # Design Patterns
 Holder -> Listview scroll performance, recycling views that disappear from the UI;</br>
-Factory -> Intent to initiate other activities;</br>
 Composite -> View; </br>
 Double Buffer-> Intermediate Object between display and data (performance increase);</br>
 Template Method-> Override;</br>
 Game Loop-> Control thread speed with sleep (Control of run velocity);</br>
+Observer -> listview array changed notifier
 
 # Major difficulties along the way
 O desenvolvimento Android tem algumas particularidades, pois o mesmo componente visual pode ser programado quer por JAVA (adicionando-o ao criar a atividade) ou pode ser feito de forma permanente se programado diretamente em xml. Outra particularidade relaciona-se com as permissões que são necessárias para a aplicação que se está a desenvolver. Todos os componentes como web, bluetooth, som ou vibração precisam de permissões individuais que devem ser acordadas pelo utilizador para que a aplicação possa aceder a esses recursos (hardware ou software) do Smartphone.</br>
